@@ -1,0 +1,52 @@
+@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welkom bij Euphonia 🎵</h1>
+    <p class="lead">Jouw muziek- en stemmingsapplicatie</p>
+</div>
+
+<div class="row mt-5">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">🎵 Muziek Beheer</h5>
+                <p class="card-text">Beheer je muziekcollectie, voeg nieuwe nummers toe en bekijk analyses.</p>
+                <a href="/MuziekView" class="btn btn-primary">Naar Muziek</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">😊 Stemmingen</h5>
+                <p class="card-text">Track je stemmingen en koppel ze aan muziek.</p>
+                <a href="#" class="btn btn-secondary disabled">Binnenkort</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">📊 API Documentatie</h5>
+                <p class="card-text">Bekijk en test alle API endpoints via Swagger.</p>
+                <a href="/swagger" class="btn btn-success">Naar API Docs</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="alert alert-info">
+            <h5>✨ Three-Tier Architecture</h5>
+            <p>Deze applicatie gebruikt een schone three-tier architectuur:</p>
+            <ul>
+                <li><strong>Presentation Layer</strong> - MVC Views & API Controllers</li>
+                <li><strong>Business Logic Layer</strong> - Services & DTOs</li>
+                <li><strong>Data Access Layer</strong> - Repositories & Entity Framework</li>
+            </ul>
+        </div>
+    </div>
+</div>

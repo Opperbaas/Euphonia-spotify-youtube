@@ -1,0 +1,45 @@
+@model UpdateMuziekDto
+
+@{
+    ViewData["Title"] = "Bewerk Nummer";
+}
+
+<h1>✏️ Bewerk Nummer</h1>
+
+<hr />
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Edit" method="post">
+            <input type="hidden" asp-for="MuziekID" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
+            <div class="mb-3">
+                <label asp-for="Titel" class="form-label"></label>
+                <input asp-for="Titel" class="form-control" />
+                <span asp-validation-for="Titel" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Artiest" class="form-label"></label>
+                <input asp-for="Artiest" class="form-control" />
+                <span asp-validation-for="Artiest" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Bron" class="form-label"></label>
+                <input asp-for="Bron" class="form-control" />
+                <span asp-validation-for="Bron" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <button type="submit" class="btn btn-primary">💾 Wijzigingen Opslaan</button>
+                <a asp-action="Index" class="btn btn-secondary">❌ Annuleren</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

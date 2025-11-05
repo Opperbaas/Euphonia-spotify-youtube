@@ -1,0 +1,44 @@
+@model CreateMuziekDto
+
+@{
+    ViewData["Title"] = "Nieuw Nummer Toevoegen";
+}
+
+<h1>➕ Nieuw Nummer Toevoegen</h1>
+
+<hr />
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Create" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
+            <div class="mb-3">
+                <label asp-for="Titel" class="form-label"></label>
+                <input asp-for="Titel" class="form-control" placeholder="Bijv. Moonlight Sonata" />
+                <span asp-validation-for="Titel" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Artiest" class="form-label"></label>
+                <input asp-for="Artiest" class="form-control" placeholder="Bijv. Beethoven" />
+                <span asp-validation-for="Artiest" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Bron" class="form-label"></label>
+                <input asp-for="Bron" class="form-control" placeholder="Bijv. Spotify, YouTube (optioneel)" />
+                <span asp-validation-for="Bron" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <button type="submit" class="btn btn-success">💾 Opslaan</button>
+                <a asp-action="Index" class="btn btn-secondary">❌ Annuleren</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
