@@ -23,6 +23,10 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IStemmingService, StemmingService>();
 builder.Services.AddScoped<IDashboardService, DashboardService>();
 
+// External Music APIs
+builder.Services.AddScoped<ISpotifyService, SpotifyService>();
+builder.Services.AddScoped<IYouTubeService, YouTubeService>();
+
 // Session configuratie
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
