@@ -17,8 +17,20 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 // Dependency Injection
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-builder.Services.AddScoped<ISpecificService, SpecificService>();
 builder.Services.AddScoped<IMuziekService, MuziekService>();
+builder.Services.AddScoped<IProfielService, ProfielService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IStemmingService, StemmingService>();
+builder.Services.AddScoped<IDashboardService, DashboardService>();
+
+// Session configuratie
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
 
 // MVC + API Controllers
 builder.Services.AddControllersWithViews()
@@ -40,7 +52,20 @@ if (app.Environment.IsDevelopment())
 
 app.UseStaticFiles();
 app.UseRouting();
+app.UseSession();
 app.UseAuthorization();
+
+// Fallback voor root EN index.html naar Home
+app.Use(async (context, next) =>
+{
+    var path = context.Request.Path.Value?.ToLower() ?? "";
+    if (path == "/" || path == "/index.html")
+    {
+        context.Response.Redirect("/Home/Index");
+        return;
+    }
+    await next();
+});
 
 // Routes - MVC EERST!
 app.MapControllerRoute(

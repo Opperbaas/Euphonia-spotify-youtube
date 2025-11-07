@@ -10,6 +10,7 @@ namespace Euphonia.DataAccessLayer.Models
     public class Muziek
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("muziekID")]
         public int MuziekID { get; set; }
 

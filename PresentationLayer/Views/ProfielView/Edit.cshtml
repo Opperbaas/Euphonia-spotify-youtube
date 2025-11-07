@@ -1,0 +1,48 @@
+@model UpdateProfielDto
+
+@{
+    ViewData["Title"] = "Bewerk Profiel";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1>✏️ Bewerk Profiel</h1>
+    <a asp-action="Index" class="btn btn-secondary">❌ Annuleren</a>
+</div>
+
+<hr />
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Edit" method="post">
+            <input type="hidden" asp-for="ProfielID" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
+            <div class="mb-3">
+                <label asp-for="UserID" class="form-label"></label>
+                <input asp-for="UserID" class="form-control" type="number" />
+                <span asp-validation-for="UserID" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="VoorkeurGenres" class="form-label"></label>
+                <input asp-for="VoorkeurGenres" class="form-control" />
+                <span asp-validation-for="VoorkeurGenres" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Stemmingstags" class="form-label"></label>
+                <input asp-for="Stemmingstags" class="form-control" />
+                <span asp-validation-for="Stemmingstags" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <button type="submit" class="btn btn-primary">💾 Wijzigingen Opslaan</button>
+                <a asp-action="Index" class="btn btn-secondary">❌ Annuleren</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

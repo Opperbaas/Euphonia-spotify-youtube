@@ -13,9 +13,6 @@ namespace Euphonia.DataAccessLayer.Context
         {
         }
 
-        // DbSets - voeg hier al je entities toe
-        public DbSet<SpecificEntity> SpecificEntities { get; set; }
-        
         // DbSets voor bestaande database tabellen
         public DbSet<Muziek> Muziek { get; set; }
         public DbSet<Profiel> Profielen { get; set; }
@@ -26,48 +23,26 @@ namespace Euphonia.DataAccessLayer.Context
         public DbSet<Stemming> Stemmingen { get; set; }
         public DbSet<StemmingType> StemmingTypes { get; set; }
         public DbSet<StemmingMuziek> StemmingMuzieks { get; set; }
+        public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
             // Entity configuraties
-            ConfigureSpecificEntity(modelBuilder);
             ConfigureBestaandeEntities(modelBuilder);
-        }
-
-        private void ConfigureSpecificEntity(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<SpecificEntity>(entity =>
-            {
-                // Primary key
-                entity.HasKey(e => e.Id);
-
-                // Indexes
-                entity.HasIndex(e => e.Name);
-
-                // Default values
-                entity.Property(e => e.IsActive)
-                    .HasDefaultValue(true);
-
-                entity.Property(e => e.CreatedDate)
-                    .HasDefaultValueSql("GETDATE()");
-
-                // Relationships
-                // entity.HasOne(e => e.RelatedEntity)
-                //     .WithMany(r => r.SpecificEntities)
-                //     .HasForeignKey(e => e.RelatedEntityId)
-                //     .OnDelete(DeleteBehavior.Cascade);
-
-                // Seed data (optioneel)
-                // entity.HasData(
-                //     new SpecificEntity { Id = 1, Name = "Test", IsActive = true }
-                // );
-            });
         }
 
         private void ConfigureBestaandeEntities(ModelBuilder modelBuilder)
         {
+            // User configuratie
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
+                entity.HasIndex(e => e.Email).IsUnique();
+            });
+
             // Muziek configuratie
             modelBuilder.Entity<Muziek>(entity =>
             {

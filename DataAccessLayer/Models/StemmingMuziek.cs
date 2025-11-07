@@ -11,6 +11,7 @@ namespace Euphonia.DataAccessLayer.Models
     {
         [Key]
         [Column("PK")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int PK { get; set; }
 
         [Column("stemmingID")]

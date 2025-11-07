@@ -1,0 +1,82 @@
+@model Euphonia.BusinessLogicLayer.DTOs.CreateStemmingDto
+
+@{
+    ViewData["Title"] = "Nieuwe Stemming";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">
+                        <i class="bi bi-plus-circle"></i> Nieuwe Stemming Toevoegen
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Create" method="post">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+                        <div class="mb-3">
+                            <label asp-for="TypeID" class="form-label">
+                                <i class="bi bi-tag"></i> Stemming Type
+                            </label>
+                            <select asp-for="TypeID" class="form-select" asp-items="ViewBag.StemmingTypes">
+                                <option value="">-- Selecteer een type --</option>
+                            </select>
+                            <span asp-validation-for="TypeID" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Beschrijving" class="form-label">
+                                <i class="bi bi-chat-left-text"></i> Beschrijving (optioneel)
+                            </label>
+                            <textarea asp-for="Beschrijving" class="form-control" rows="4" 
+                                      placeholder="Beschrijf hoe je je voelt..."></textarea>
+                            <span asp-validation-for="Beschrijving" class="text-danger"></span>
+                        </div>
+
+                        @if (ViewBag.AlleMuziek != null && ((List<Euphonia.BusinessLogicLayer.DTOs.MuziekDto>)ViewBag.AlleMuziek).Any())
+                        {
+                            <div class="mb-3">
+                                <label class="form-label">
+                                    <i class="bi bi-music-note-list"></i> Muziek (optioneel)
+                                </label>
+                                <div class="border rounded p-3" style="max-height: 300px; overflow-y: auto;">
+                                    @foreach (var muziek in (List<Euphonia.BusinessLogicLayer.DTOs.MuziekDto>)ViewBag.AlleMuziek)
+                                    {
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="checkbox" 
+                                                   name="MuziekIDs" value="@muziek.MuziekID" 
+                                                   id="muziek_@muziek.MuziekID">
+                                            <label class="form-check-label" for="muziek_@muziek.MuziekID">
+                                                <i class="bi bi-music-note-beamed text-primary"></i>
+                                                <strong>@muziek.Titel</strong> - <em>@muziek.Artiest</em>
+                                            </label>
+                                        </div>
+                                    }
+                                </div>
+                                <small class="form-text text-muted">
+                                    Selecteer de liedjes die je luisterde tijdens deze stemming
+                                </small>
+                            </div>
+                        }
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a asp-action="Index" class="btn btn-secondary">
+                                <i class="bi bi-x-circle"></i> Annuleren
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-save"></i> Opslaan
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

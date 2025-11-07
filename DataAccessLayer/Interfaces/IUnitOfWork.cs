@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Euphonia.DataAccessLayer.Repositories;
 
 namespace Euphonia.DataAccessLayer.Interfaces
 {
@@ -8,10 +9,13 @@ namespace Euphonia.DataAccessLayer.Interfaces
     /// </summary>
     public interface IUnitOfWork : IDisposable
     {
-        // Repositories - voeg hier al je repositories toe
-        ISpecificRepository SpecificRepository { get; }
+        // Repositories
         IMuziekRepository MuziekRepository { get; }
-        // IYetAnotherRepository YetAnotherRepository { get; }
+        IProfielRepository ProfielRepository { get; }
+        IUserRepository UserRepository { get; }
+        IStemmingRepository StemmingRepository { get; }
+        IStemmingTypeRepository StemmingTypeRepository { get; }
+        IStemmingMuziekRepository StemmingMuziekRepository { get; }
 
         // Transactie management
         Task<int> SaveChangesAsync();

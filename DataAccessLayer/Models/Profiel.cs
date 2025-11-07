@@ -10,6 +10,7 @@ namespace Euphonia.DataAccessLayer.Models
     public class Profiel
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("profielID")]
         public int ProfielID { get; set; }
 

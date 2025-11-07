@@ -13,16 +13,13 @@ namespace Euphonia.DataAccessLayer.Models
         [Column("typeID")]
         public int TypeID { get; set; }
 
-        [MaxLength(255)]
-        [Column("label")]
-        public string? Label { get; set; }
+        [MaxLength(100)]
+        [Column("naam")]
+        public string? Naam { get; set; }
 
-        [MaxLength(255)]
-        [Column("emoji")]
-        public string? Emoji { get; set; }
-
-        [Column("waarde")]
-        public int? Waarde { get; set; }
+        [MaxLength(500)]
+        [Column("beschrijving")]
+        public string? Beschrijving { get; set; }
 
         // Navigation property
         public virtual ICollection<Stemming> Stemmingen { get; set; } = new List<Stemming>();

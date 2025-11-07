@@ -13,28 +13,19 @@ namespace Euphonia.DataAccessLayer.UnitOfWork
     public class UnitOfWork : IUnitOfWork
     {
         private readonly ApplicationDbContext _context;
-        private IDbContextTransaction _transaction;
+        private IDbContextTransaction? _transaction;
 
         // Repositories
-        private ISpecificRepository _specificRepository;
-        private IMuziekRepository _muziekRepository;
+        private IMuziekRepository? _muziekRepository;
+        private IProfielRepository? _profielRepository;
+        private IUserRepository? _userRepository;
+        private IStemmingRepository? _stemmingRepository;
+        private IStemmingTypeRepository? _stemmingTypeRepository;
+        private IStemmingMuziekRepository? _stemmingMuziekRepository;
 
         public UnitOfWork(ApplicationDbContext context)
         {
             _context = context;
-        }
-
-        // Repository properties met lazy initialization
-        public ISpecificRepository SpecificRepository
-        {
-            get
-            {
-                if (_specificRepository == null)
-                {
-                    _specificRepository = new SpecificRepository(_context);
-                }
-                return _specificRepository;
-            }
         }
 
         public IMuziekRepository MuziekRepository
@@ -49,18 +40,65 @@ namespace Euphonia.DataAccessLayer.UnitOfWork
             }
         }
 
-        // Voeg hier meer repositories toe
-        // public IAnotherRepository AnotherRepository
-        // {
-        //     get
-        //     {
-        //         if (_anotherRepository == null)
-        //         {
-        //             _anotherRepository = new AnotherRepository(_context);
-        //         }
-        //         return _anotherRepository;
-        //     }
-        // }
+        public IProfielRepository ProfielRepository
+        {
+            get
+            {
+                if (_profielRepository == null)
+                {
+                    _profielRepository = new ProfielRepository(_context);
+                }
+                return _profielRepository;
+            }
+        }
+
+        public IUserRepository UserRepository
+        {
+            get
+            {
+                if (_userRepository == null)
+                {
+                    _userRepository = new UserRepository(_context);
+                }
+                return _userRepository;
+            }
+        }
+
+        public IStemmingRepository StemmingRepository
+        {
+            get
+            {
+                if (_stemmingRepository == null)
+                {
+                    _stemmingRepository = new StemmingRepository(_context);
+                }
+                return _stemmingRepository;
+            }
+        }
+
+        public IStemmingTypeRepository StemmingTypeRepository
+        {
+            get
+            {
+                if (_stemmingTypeRepository == null)
+                {
+                    _stemmingTypeRepository = new StemmingTypeRepository(_context);
+                }
+                return _stemmingTypeRepository;
+            }
+        }
+
+        public IStemmingMuziekRepository StemmingMuziekRepository
+        {
+            get
+            {
+                if (_stemmingMuziekRepository == null)
+                {
+                    _stemmingMuziekRepository = new StemmingMuziekRepository(_context);
+                }
+                return _stemmingMuziekRepository;
+            }
+        }
 
         // Transactie management
         public async Task<int> SaveChangesAsync()

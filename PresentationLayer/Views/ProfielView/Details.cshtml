@@ -1,0 +1,53 @@
+@model ProfielDto
+
+@{
+    ViewData["Title"] = "Profiel Details";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1>👤 Profiel Details</h1>
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model.ProfielID" class="btn btn-primary">✏️ Bewerken</a>
+        <a asp-action="Index" class="btn btn-secondary">🔙 Terug</a>
+    </div>
+</div>
+
+<hr />
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.ProfielID)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.ProfielID)
+        </dd>
+
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.UserID)
+        </dt>
+        <dd class="col-sm-9">
+            @(Model.UserID?.ToString() ?? "-")
+        </dd>
+
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.VoorkeurGenres)
+        </dt>
+        <dd class="col-sm-9">
+            @(Model.VoorkeurGenres ?? "-")
+        </dd>
+
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Stemmingstags)
+        </dt>
+        <dd class="col-sm-9">
+            @(Model.Stemmingstags ?? "-")
+        </dd>
+    </dl>
+</div>
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.ProfielID" class="btn btn-primary">✏️ Bewerken</a>
+    <a asp-action="Delete" asp-route-id="@Model.ProfielID" class="btn btn-danger">🗑️ Verwijderen</a>
+    <a asp-action="Index" class="btn btn-secondary">🔙 Terug naar Lijst</a>
+</div>

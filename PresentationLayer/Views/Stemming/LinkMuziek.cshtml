@@ -1,0 +1,138 @@
+@{
+    ViewData["Title"] = "Muziek Koppelen";
+    var stemming = ViewBag.Stemming as Euphonia.BusinessLogicLayer.DTOs.StemmingDto;
+    var alleMuziek = ViewBag.AlleMuziek as List<Euphonia.BusinessLogicLayer.DTOs.MuziekDto>;
+    var gekoppeldeMuziekIDs = ViewBag.GekoppeldeMuziekIDs as List<int> ?? new List<int>();
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-success text-white">
+                    <h4 class="mb-0">
+                        <i class="bi bi-music-note-list"></i> Muziek Koppelen
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-info">
+                        <strong>Stemming:</strong> @stemming?.TypeNaam<br />
+                        <strong>Datum:</strong> @(stemming?.DatumTijd?.ToString("dd MMM yyyy HH:mm") ?? "Onbekend")
+                    </div>
+
+                    @if (TempData["SuccessMessage"] != null)
+                    {
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            @TempData["SuccessMessage"]
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    }
+
+                    @if (TempData["ErrorMessage"] != null)
+                    {
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            @TempData["ErrorMessage"]
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    }
+
+                    <h5 class="mb-3">Beschikbare Muziek</h5>
+                    
+                    @if (alleMuziek != null && alleMuziek.Any())
+                    {
+                        <div class="list-group" style="max-height: 500px; overflow-y: auto;">
+                            @foreach (var muziek in alleMuziek)
+                            {
+                                var isLinked = gekoppeldeMuziekIDs.Contains(muziek.MuziekID);
+                                <div class="list-group-item d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <i class="bi bi-music-note-beamed @(isLinked ? "text-success" : "text-muted")"></i>
+                                        <strong>@muziek.Titel</strong> - <em>@muziek.Artiest</em>
+                                        @if (!string.IsNullOrWhiteSpace(muziek.Bron))
+                                        {
+                                            <br />
+                                            <small class="text-muted">Bron: @muziek.Bron</small>
+                                        }
+                                    </div>
+                                    <div>
+                                        @if (isLinked)
+                                        {
+                                            <form asp-action="UnlinkMuziek" method="post" class="d-inline">
+                                                @Html.AntiForgeryToken()
+                                                <input type="hidden" name="stemmingId" value="@stemming?.StemmingID" />
+                                                <input type="hidden" name="muziekId" value="@muziek.MuziekID" />
+                                                <button type="submit" class="btn btn-sm btn-outline-danger">
+                                                    <i class="bi bi-x-circle"></i> Ontkoppelen
+                                                </button>
+                                            </form>
+                                        }
+                                        else
+                                        {
+                                            <form asp-action="LinkMuziek" method="post" class="d-inline">
+                                                @Html.AntiForgeryToken()
+                                                <input type="hidden" name="stemmingId" value="@stemming?.StemmingID" />
+                                                <input type="hidden" name="muziekId" value="@muziek.MuziekID" />
+                                                <button type="submit" class="btn btn-sm btn-success">
+                                                    <i class="bi bi-plus-circle"></i> Koppelen
+                                                </button>
+                                            </form>
+                                        }
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-warning">
+                            <i class="bi bi-exclamation-triangle"></i>
+                            Je hebt nog geen muziek toegevoegd. 
+                            <a asp-controller="Muziek" asp-action="Create" class="alert-link">Voeg eerst muziek toe!</a>
+                        </div>
+                    }
+
+                    <div class="mt-4">
+                        <a asp-action="Index" class="btn btn-secondary">
+                            <i class="bi bi-arrow-left"></i> Terug naar Overzicht
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0">
+                        <i class="bi bi-info-circle"></i> Hulp
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <h6>Hoe werkt het?</h6>
+                    <ul class="small">
+                        <li>Klik op <strong>Koppelen</strong> om muziek aan deze stemming toe te voegen</li>
+                        <li>Klik op <strong>Ontkoppelen</strong> om de koppeling te verwijderen</li>
+                        <li>Je kunt meerdere liedjes aan één stemming koppelen</li>
+                    </ul>
+                    
+                    <hr />
+                    
+                    <h6>Gekoppelde Muziek</h6>
+                    @if (gekoppeldeMuziekIDs.Any())
+                    {
+                        <p class="text-success">
+                            <i class="bi bi-check-circle"></i> 
+                            <strong>@gekoppeldeMuziekIDs.Count</strong> liedje(s) gekoppeld
+                        </p>
+                    }
+                    else
+                    {
+                        <p class="text-muted">
+                            <i class="bi bi-dash-circle"></i> Nog geen muziek gekoppeld
+                        </p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

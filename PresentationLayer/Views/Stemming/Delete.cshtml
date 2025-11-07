@@ -1,0 +1,56 @@
+@model Euphonia.BusinessLogicLayer.DTOs.StemmingDto
+
+@{
+    ViewData["Title"] = "Stemming Verwijderen";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow border-danger">
+                <div class="card-header bg-danger text-white">
+                    <h4 class="mb-0">
+                        <i class="bi bi-exclamation-triangle"></i> Stemming Verwijderen
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-warning">
+                        <i class="bi bi-info-circle"></i> 
+                        Weet je zeker dat je deze stemming wilt verwijderen?
+                    </div>
+
+                    <dl class="row">
+                        <dt class="col-sm-3">Type</dt>
+                        <dd class="col-sm-9">
+                            <i class="bi bi-heart-fill text-danger"></i> @Model.TypeNaam
+                        </dd>
+
+                        <dt class="col-sm-3">Datum & Tijd</dt>
+                        <dd class="col-sm-9">
+                            <i class="bi bi-calendar-event"></i> 
+                            @(Model.DatumTijd?.ToString("dd MMMM yyyy HH:mm") ?? "Onbekend")
+                        </dd>
+
+                        @if (!string.IsNullOrWhiteSpace(Model.Beschrijving))
+                        {
+                            <dt class="col-sm-3">Beschrijving</dt>
+                            <dd class="col-sm-9">@Model.Beschrijving</dd>
+                        }
+                    </dl>
+
+                    <form asp-action="Delete" method="post">
+                        <input type="hidden" asp-for="StemmingID" />
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a asp-action="Index" class="btn btn-secondary">
+                                <i class="bi bi-x-circle"></i> Annuleren
+                            </a>
+                            <button type="submit" class="btn btn-danger">
+                                <i class="bi bi-trash"></i> Ja, Verwijderen
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
