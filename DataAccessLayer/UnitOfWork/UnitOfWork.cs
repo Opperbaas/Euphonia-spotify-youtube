@@ -22,6 +22,7 @@ namespace Euphonia.DataAccessLayer.UnitOfWork
         private IStemmingRepository? _stemmingRepository;
         private IStemmingTypeRepository? _stemmingTypeRepository;
         private IStemmingMuziekRepository? _stemmingMuziekRepository;
+        private INotificatieRepository? _notificatieRepository;
 
         public UnitOfWork(ApplicationDbContext context)
         {
@@ -97,6 +98,18 @@ namespace Euphonia.DataAccessLayer.UnitOfWork
                     _stemmingMuziekRepository = new StemmingMuziekRepository(_context);
                 }
                 return _stemmingMuziekRepository;
+            }
+        }
+
+        public INotificatieRepository NotificatieRepository
+        {
+            get
+            {
+                if (_notificatieRepository == null)
+                {
+                    _notificatieRepository = new NotificatieRepository(_context);
+                }
+                return _notificatieRepository;
             }
         }
 

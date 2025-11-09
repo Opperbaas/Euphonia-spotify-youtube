@@ -1,0 +1,167 @@
+@model List<NotificatieDto>
+
+@{
+    ViewData["Title"] = "Notificaties";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><i class="bi bi-bell"></i> Mijn Notificaties</h1>
+        <div>
+            <button id="markeerAlleGelezen" class="btn btn-outline-primary">
+                <i class="bi bi-check-all"></i> Markeer alle als gelezen
+            </button>
+        </div>
+    </div>
+
+    @if (Model == null || !Model.Any())
+    {
+        <div class="alert alert-info text-center">
+            <i class="bi bi-inbox" style="font-size: 3rem;"></i>
+            <p class="mt-3">Je hebt geen notificaties.</p>
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                <div class="list-group">
+                    @foreach (var notificatie in Model)
+                    {
+                        <div class="list-group-item @(notificatie.IsGelezen ? "" : "list-group-item-action bg-light")" 
+                             data-notificatie-id="@notificatie.NotificatieID">
+                            <div class="d-flex w-100 justify-content-between align-items-start">
+                                <div class="d-flex align-items-start flex-grow-1">
+                                    <!-- Icoon -->
+                                    <div class="me-3">
+                                        <span class="badge @notificatie.BadgeClass rounded-circle p-2" style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+                                            <i class="@(notificatie.Icoon ?? "bi-bell")" style="font-size: 1.2rem;"></i>
+                                        </span>
+                                    </div>
+
+                                    <!-- Inhoud -->
+                                    <div class="flex-grow-1">
+                                        <p class="mb-1 @(notificatie.IsGelezen ? "text-muted" : "fw-bold")">
+                                            @notificatie.Tekst
+                                        </p>
+                                        <small class="text-muted">
+                                            <i class="bi bi-clock"></i> @notificatie.TijdGeleden
+                                        </small>
+
+                                        @if (!string.IsNullOrEmpty(notificatie.Link))
+                                        {
+                                            <div class="mt-2">
+                                                <a href="@notificatie.Link" class="btn btn-sm btn-outline-primary">
+                                                    <i class="bi bi-arrow-right-circle"></i> Bekijk
+                                                </a>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+
+                                <!-- Acties -->
+                                <div class="dropdown ms-2">
+                                    <button class="btn btn-sm btn-link text-muted" type="button" data-bs-toggle="dropdown">
+                                        <i class="bi bi-three-dots-vertical"></i>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-end">
+                                        @if (!notificatie.IsGelezen)
+                                        {
+                                            <li>
+                                                <a class="dropdown-item markeer-gelezen" href="#" data-id="@notificatie.NotificatieID">
+                                                    <i class="bi bi-check"></i> Markeer als gelezen
+                                                </a>
+                                            </li>
+                                        }
+                                        <li>
+                                            <form asp-action="Delete" method="post" class="d-inline">
+                                                <input type="hidden" name="id" value="@notificatie.NotificatieID" />
+                                                <button type="submit" class="dropdown-item text-danger" onclick="return confirm('Weet je zeker dat je deze notificatie wilt verwijderen?')">
+                                                    <i class="bi bi-trash"></i> Verwijderen
+                                                </button>
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        // Markeer individuele notificatie als gelezen
+        document.querySelectorAll('.markeer-gelezen').forEach(function(link) {
+            link.addEventListener('click', async function(e) {
+                e.preventDefault();
+                const notificatieId = this.getAttribute('data-id');
+                
+                try {
+                    const response = await fetch(`/Notificatie/MarkeerGelezen/${notificatieId}`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        }
+                    });
+
+                    if (response.ok) {
+                        // Verwijder highlight van het item
+                        const item = document.querySelector(`[data-notificatie-id="${notificatieId}"]`);
+                        item.classList.remove('list-group-item-action', 'bg-light');
+                        
+                        // Verwijder de "markeer als gelezen" optie
+                        this.closest('li').remove();
+                        
+                        // Update tekst styling
+                        const textElement = item.querySelector('p');
+                        textElement.classList.remove('fw-bold');
+                        textElement.classList.add('text-muted');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                }
+            });
+        });
+
+        // Markeer alle notificaties als gelezen
+        document.getElementById('markeerAlleGelezen')?.addEventListener('click', async function() {
+            try {
+                const response = await fetch('/Notificatie/MarkeerAlleGelezen', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+
+                if (response.ok) {
+                    location.reload();
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+    </script>
+}
+
+<style>
+    .list-group-item {
+        border-left: 4px solid transparent;
+        transition: all 0.3s ease;
+    }
+
+    .list-group-item:not(.bg-light) {
+        border-left-color: #e9ecef;
+    }
+
+    .list-group-item.bg-light {
+        border-left-color: #0d6efd;
+    }
+
+    .list-group-item:hover {
+        background-color: #f8f9fa !important;
+    }
+</style>

@@ -16,6 +16,7 @@ namespace Euphonia.DataAccessLayer.Interfaces
         IStemmingRepository StemmingRepository { get; }
         IStemmingTypeRepository StemmingTypeRepository { get; }
         IStemmingMuziekRepository StemmingMuziekRepository { get; }
+        INotificatieRepository NotificatieRepository { get; }
 
         // Transactie management
         Task<int> SaveChangesAsync();

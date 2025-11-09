@@ -22,6 +22,7 @@ builder.Services.AddScoped<IProfielService, ProfielService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IStemmingService, StemmingService>();
 builder.Services.AddScoped<IDashboardService, DashboardService>();
+builder.Services.AddScoped<INotificatieService, NotificatieService>();
 
 // External Music APIs
 builder.Services.AddScoped<ISpotifyService, SpotifyService>();
