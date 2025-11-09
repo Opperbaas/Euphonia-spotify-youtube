@@ -12,3 +12,4 @@ C:\Users\Jamal\Documents\GitHub\Euphonia\DataAccessLayer\obj\Debug\net9.0\refint
 C:\Users\Jamal\Documents\GitHub\Euphonia\DataAccessLayer\obj\Debug\net9.0\DataAccessLayer.pdb
 C:\Users\Jamal\Documents\GitHub\Euphonia\DataAccessLayer\obj\Debug\net9.0\DataAccessLayer.genruntimeconfig.cache
 C:\Users\Jamal\Documents\GitHub\Euphonia\DataAccessLayer\obj\Debug\net9.0\ref\DataAccessLayer.dll
+C:\Users\Jamal\Documents\GitHub\Euphonia\DataAccessLayer\obj\Debug\net9.0\DataAccessLayer.sourcelink.json

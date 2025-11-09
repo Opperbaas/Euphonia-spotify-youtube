@@ -13,3 +13,4 @@ C:\Users\Jamal\Documents\GitHub\Euphonia\BusinessLogicLayer\obj\Debug\net9.0\Bus
 C:\Users\Jamal\Documents\GitHub\Euphonia\BusinessLogicLayer\obj\Debug\net9.0\refint\BusinessLogicLayer.dll
 C:\Users\Jamal\Documents\GitHub\Euphonia\BusinessLogicLayer\obj\Debug\net9.0\BusinessLogicLayer.pdb
 C:\Users\Jamal\Documents\GitHub\Euphonia\BusinessLogicLayer\obj\Debug\net9.0\ref\BusinessLogicLayer.dll
+C:\Users\Jamal\Documents\GitHub\Euphonia\BusinessLogicLayer\obj\Debug\net9.0\BusinessLogicLayer.sourcelink.json
