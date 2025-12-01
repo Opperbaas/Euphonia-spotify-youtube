@@ -1,0 +1,48 @@
+@model MuziekDto
+
+@{
+    ViewData["Title"] = "Verwijderen";
+}
+
+<h1>🗑️ Verwijder Nummer</h1>
+
+<h3 class="text-danger">Weet je zeker dat je dit nummer wilt verwijderen?</h3>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.MuziekID)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.MuziekID)
+        </dd>
+
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Titel)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Titel)
+        </dd>
+
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Artiest)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Artiest)
+        </dd>
+
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Bron)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Bron)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete" method="post">
+        <input type="hidden" asp-for="MuziekID" />
+        <button type="submit" class="btn btn-danger">⚠️ Ja, Verwijderen</button>
+        <a asp-action="Index" class="btn btn-secondary">❌ Annuleren</a>
+    </form>
+</div>

@@ -1,0 +1,280 @@
+@model CreateMuziekDto
+
+@{
+    ViewData["Title"] = "Nieuw Nummer Toevoegen";
+}
+
+<h1>➕ Nieuw Nummer Toevoegen</h1>
+
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <!-- Tabs voor verschillende input modi -->
+        <ul class="nav nav-tabs" id="muziekInputTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="manual-tab" data-bs-toggle="tab" data-bs-target="#manual" type="button" role="tab">
+                    <i class="bi bi-pencil"></i> Handmatig
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="spotify-tab" data-bs-toggle="tab" data-bs-target="#spotify" type="button" role="tab">
+                    <i class="bi bi-spotify" style="color: #1DB954;"></i> Spotify
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="youtube-tab" data-bs-toggle="tab" data-bs-target="#youtube" type="button" role="tab">
+                    <i class="bi bi-youtube" style="color: #FF0000;"></i> YouTube
+                </button>
+            </li>
+        </ul>
+
+        <div class="tab-content border border-top-0 p-4" id="muziekInputTabsContent">
+            <!-- TAB 1: Handmatige invoer -->
+            <div class="tab-pane fade show active" id="manual" role="tabpanel">
+                <form asp-action="Create" method="post" id="manualForm">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    
+                    <div class="mb-3">
+                        <label asp-for="Titel" class="form-label"></label>
+                        <input asp-for="Titel" class="form-control" placeholder="Bijv. Moonlight Sonata" />
+                        <span asp-validation-for="Titel" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Artiest" class="form-label"></label>
+                        <input asp-for="Artiest" class="form-control" placeholder="Bijv. Beethoven" />
+                        <span asp-validation-for="Artiest" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Bron" class="form-label"></label>
+                        <input asp-for="Bron" class="form-control" placeholder="Optioneel" />
+                        <span asp-validation-for="Bron" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <button type="submit" class="btn btn-success">💾 Opslaan</button>
+                        <a asp-action="Index" class="btn btn-secondary">❌ Annuleren</a>
+                    </div>
+                </form>
+            </div>
+
+            <!-- TAB 2: Spotify zoeken -->
+            <div class="tab-pane fade" id="spotify" role="tabpanel">
+                <div class="mb-3">
+                    <label for="spotifySearch" class="form-label">Zoek op Spotify</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="spotifySearch" placeholder="Bijv. Bohemian Rhapsody Queen" />
+                        <button class="btn btn-success" type="button" id="btnSpotifySearch">
+                            <i class="bi bi-search"></i> Zoeken
+                        </button>
+                    </div>
+                    <small class="text-muted">Zoek naar artiest, titel of beide</small>
+                </div>
+
+                <div id="spotifyResults" class="mb-3"></div>
+                <div id="spotifyLoading" class="text-center d-none">
+                    <div class="spinner-border text-success" role="status">
+                        <span class="visually-hidden">Laden...</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 3: YouTube URL -->
+            <div class="tab-pane fade" id="youtube" role="tabpanel">
+                <div class="mb-3">
+                    <label for="youtubeUrl" class="form-label">YouTube URL</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="youtubeUrl" placeholder="https://www.youtube.com/watch?v=..." />
+                        <button class="btn btn-danger" type="button" id="btnYouTubeLoad">
+                            <i class="bi bi-arrow-down-circle"></i> Ophalen
+                        </button>
+                    </div>
+                    <small class="text-muted">Plak de volledige YouTube URL</small>
+                </div>
+
+                <div id="youtubeResults" class="mb-3"></div>
+                <div id="youtubeLoading" class="text-center d-none">
+                    <div class="spinner-border text-danger" role="status">
+                        <span class="visually-hidden">Laden...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    
+    <script>
+        // Spotify zoeken
+        document.getElementById('btnSpotifySearch').addEventListener('click', async function() {
+            const query = document.getElementById('spotifySearch').value.trim();
+            if (!query) {
+                alert('Voer een zoekterm in');
+                return;
+            }
+
+            const resultsDiv = document.getElementById('spotifyResults');
+            const loadingDiv = document.getElementById('spotifyLoading');
+            
+            resultsDiv.innerHTML = '';
+            loadingDiv.classList.remove('d-none');
+
+            try {
+                const response = await fetch(`/api/ExternalMusic/spotify/search?query=${encodeURIComponent(query)}&limit=10`);
+                const data = await response.json();
+
+                loadingDiv.classList.add('d-none');
+
+                if (!response.ok) {
+                    resultsDiv.innerHTML = `<div class="alert alert-danger">${data.error || 'Er is een fout opgetreden'}</div>`;
+                    return;
+                }
+
+                if (data.length === 0) {
+                    resultsDiv.innerHTML = '<div class="alert alert-info">Geen resultaten gevonden</div>';
+                    return;
+                }
+
+                let html = '<div class="list-group">';
+                data.forEach(track => {
+                    const duration = track.durationMs ? Math.floor(track.durationMs / 1000) : 0;
+                    const minutes = Math.floor(duration / 60);
+                    const seconds = (duration % 60).toString().padStart(2, '0');
+                    
+                    html += `
+                        <div class="list-group-item list-group-item-action" style="cursor: pointer;" onclick="selectSpotifyTrack('${escapeHtml(track.titel)}', '${escapeHtml(track.artiest)}', '${escapeHtml(track.externalUrl || '')}')">
+                            <div class="d-flex w-100 justify-content-between align-items-center">
+                                <div class="d-flex align-items-center">
+                                    ${track.albumImageUrl ? `<img src="${track.albumImageUrl}" alt="Album art" style="width: 50px; height: 50px; margin-right: 15px; border-radius: 4px;">` : ''}
+                                    <div>
+                                        <h6 class="mb-1">${escapeHtml(track.titel)}</h6>
+                                        <small class="text-muted">${escapeHtml(track.artiest)}</small>
+                                    </div>
+                                </div>
+                                <div class="text-end">
+                                    <small class="text-muted">${minutes}:${seconds}</small>
+                                    ${track.previewUrl ? `<br><small><a href="${track.previewUrl}" target="_blank" onclick="event.stopPropagation();">🎵 Preview</a></small>` : ''}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+                html += '</div>';
+                resultsDiv.innerHTML = html;
+            } catch (error) {
+                loadingDiv.classList.add('d-none');
+                resultsDiv.innerHTML = '<div class="alert alert-danger">Fout bij verbinden met Spotify API</div>';
+                console.error('Spotify error:', error);
+            }
+        });
+
+        // YouTube ophalen
+        document.getElementById('btnYouTubeLoad').addEventListener('click', async function() {
+            const url = document.getElementById('youtubeUrl').value.trim();
+            if (!url) {
+                alert('Voer een YouTube URL in');
+                return;
+            }
+
+            const resultsDiv = document.getElementById('youtubeResults');
+            const loadingDiv = document.getElementById('youtubeLoading');
+            
+            resultsDiv.innerHTML = '';
+            loadingDiv.classList.remove('d-none');
+
+            try {
+                const response = await fetch(`/api/ExternalMusic/youtube/video?url=${encodeURIComponent(url)}`);
+                const data = await response.json();
+
+                loadingDiv.classList.add('d-none');
+
+                if (!response.ok) {
+                    resultsDiv.innerHTML = `<div class="alert alert-danger">${data.error || 'Er is een fout opgetreden'}</div>`;
+                    return;
+                }
+
+                const duration = data.durationMs ? Math.floor(data.durationMs / 1000) : 0;
+                const minutes = Math.floor(duration / 60);
+                const seconds = (duration % 60).toString().padStart(2, '0');
+
+                resultsDiv.innerHTML = `
+                    <div class="card">
+                        <div class="row g-0">
+                            ${data.albumImageUrl ? `
+                                <div class="col-md-4">
+                                    <img src="${data.albumImageUrl}" class="img-fluid rounded-start" alt="Thumbnail">
+                                </div>
+                            ` : ''}
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">${escapeHtml(data.titel)}</h5>
+                                    <p class="card-text"><small class="text-muted">Kanaal: ${escapeHtml(data.artiest)}</small></p>
+                                    <p class="card-text"><small class="text-muted">Duur: ${minutes}:${seconds}</small></p>
+                                    <button type="button" class="btn btn-success" onclick="selectYouTubeVideo('${escapeHtml(data.titel)}', '${escapeHtml(data.artiest)}', '${escapeHtml(data.externalUrl || '')}')">
+                                        <i class="bi bi-check-circle"></i> Deze Gebruiken
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } catch (error) {
+                loadingDiv.classList.add('d-none');
+                resultsDiv.innerHTML = '<div class="alert alert-danger">Fout bij verbinden met YouTube API</div>';
+                console.error('YouTube error:', error);
+            }
+        });
+
+        // Helper functies
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function selectSpotifyTrack(titel, artiest, url) {
+            document.getElementById('Titel').value = titel;
+            document.getElementById('Artiest').value = artiest;
+            document.getElementById('Bron').value = url || 'Spotify';
+            
+            // Switch naar manual tab
+            const manualTab = new bootstrap.Tab(document.getElementById('manual-tab'));
+            manualTab.show();
+            
+            // Scroll naar form
+            document.getElementById('Titel').focus();
+        }
+
+        function selectYouTubeVideo(titel, kanaal, url) {
+            document.getElementById('Titel').value = titel;
+            document.getElementById('Artiest').value = kanaal;
+            document.getElementById('Bron').value = url || 'YouTube';
+            
+            // Switch naar manual tab
+            const manualTab = new bootstrap.Tab(document.getElementById('manual-tab'));
+            manualTab.show();
+            
+            // Scroll naar form
+            document.getElementById('Titel').focus();
+        }
+
+        // Enter key support
+        document.getElementById('spotifySearch').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                document.getElementById('btnSpotifySearch').click();
+            }
+        });
+
+        document.getElementById('youtubeUrl').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                document.getElementById('btnYouTubeLoad').click();
+            }
+        });
+    </script>
+}

@@ -1,0 +1,103 @@
+@model IEnumerable<Euphonia.BusinessLogicLayer.DTOs.StemmingDto>
+
+@{
+    ViewData["Title"] = "Mijn Stemmingen";
+}
+
+<div class="container mt-4">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h1>
+                <i class="bi bi-emoji-smile"></i> Mijn Stemmingen
+            </h1>
+            <p class="text-muted">Houd je emoties en gevoelens bij</p>
+        </div>
+        <div class="col-md-4 text-end">
+            <a asp-action="Create" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i> Nieuwe Stemming
+            </a>
+        </div>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="row">
+            @foreach (var stemming in Model)
+            {
+                <div class="col-md-6 col-lg-4 mb-3">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <i class="bi bi-heart-fill text-danger"></i> @stemming.TypeNaam
+                            </h5>
+                            <h6 class="card-subtitle mb-2 text-muted">
+                                <i class="bi bi-calendar-event"></i> 
+                                @(stemming.DatumTijd?.ToString("dd MMM yyyy HH:mm") ?? "Onbekend")
+                            </h6>
+                            @if (!string.IsNullOrWhiteSpace(stemming.Beschrijving))
+                            {
+                                <p class="card-text">@stemming.Beschrijving</p>
+                            }
+                            
+                            @if (stemming.GekoppeldeMuziek != null && stemming.GekoppeldeMuziek.Any())
+                            {
+                                <div class="mt-2">
+                                    <small class="text-muted">
+                                        <i class="bi bi-music-note-list"></i> Muziek:
+                                    </small>
+                                    <ul class="list-unstyled small">
+                                        @foreach (var muziek in stemming.GekoppeldeMuziek.Take(3))
+                                        {
+                                            <li>
+                                                <i class="bi bi-music-note-beamed text-primary"></i>
+                                                <strong>@muziek.Titel</strong> - @muziek.Artiest
+                                            </li>
+                                        }
+                                        @if (stemming.GekoppeldeMuziek.Count > 3)
+                                        {
+                                            <li class="text-muted">
+                                                <i class="bi bi-three-dots"></i> en nog @(stemming.GekoppeldeMuziek.Count - 3) meer
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+                            }
+                        </div>
+                        <div class="card-footer bg-transparent">
+                            <div class="btn-group" role="group">
+                                <a asp-action="LinkMuziek" asp-route-id="@stemming.StemmingID"
+                                   class="btn btn-sm btn-outline-success">
+                                    <i class="bi bi-music-note-list"></i> Muziek
+                                </a>
+                                <a asp-action="Edit" asp-route-id="@stemming.StemmingID" 
+                                   class="btn btn-sm btn-outline-primary">
+                                    <i class="bi bi-pencil"></i> Bewerken
+                                </a>
+                                <a asp-action="Delete" asp-route-id="@stemming.StemmingID" 
+                                   class="btn btn-sm btn-outline-danger">
+                                    <i class="bi bi-trash"></i> Verwijderen
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info">
+            <i class="bi bi-info-circle"></i> 
+            Je hebt nog geen stemmingen geregistreerd. 
+            <a asp-action="Create" class="alert-link">Voeg je eerste stemming toe!</a>
+        </div>
+    }
+</div>

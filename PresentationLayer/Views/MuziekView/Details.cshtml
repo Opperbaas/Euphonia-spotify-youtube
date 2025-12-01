@@ -1,0 +1,47 @@
+@model MuziekDto
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>🎵 Details</h1>
+
+<hr />
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.MuziekID)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.MuziekID)
+        </dd>
+
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Titel)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Titel)
+        </dd>
+
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Artiest)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Artiest)
+        </dd>
+
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Bron)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Bron)
+        </dd>
+    </dl>
+</div>
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.MuziekID" class="btn btn-primary">✏️ Bewerken</a>
+    <a asp-action="Delete" asp-route-id="@Model.MuziekID" class="btn btn-danger">🗑️ Verwijderen</a>
+    <a asp-action="Index" class="btn btn-secondary">🔙 Terug naar Lijst</a>
+</div>

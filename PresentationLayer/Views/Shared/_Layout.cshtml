@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Euphonia</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-dark bg-dark mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/">🎵 Euphonia</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Dashboard">
+                                <i class="bi bi-speedometer2"></i> Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/MuziekView">Muziek</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/ProfielView">Profielen</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Stemming">Stemmingen</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/swagger">API Docs</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ms-auto">
+                        @if (Context.Session.GetInt32("UserId") != null)
+                        {
+                            <!-- Notificatie bel -->
+                            <li class="nav-item dropdown">
+                                <a class="nav-link position-relative" href="#" id="notificatieDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-bell fs-5"></i>
+                                    <span id="notificatieBadge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="display: none; font-size: 0.6rem;">
+                                        0
+                                    </span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificatieDropdown" style="min-width: 350px; max-width: 400px;">
+                                    <li class="dropdown-header d-flex justify-content-between align-items-center">
+                                        <span><strong>Notificaties</strong></span>
+                                        <a href="/Notificatie" class="btn btn-sm btn-link text-decoration-none">Bekijk alle</a>
+                                    </li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <div id="notificatiesList" style="max-height: 400px; overflow-y: auto;">
+                                        <li class="text-center text-muted py-3">
+                                            <div class="spinner-border spinner-border-sm" role="status">
+                                                <span class="visually-hidden">Laden...</span>
+                                            </div>
+                                        </li>
+                                    </div>
+                                </ul>
+                            </li>
+
+                            <li class="nav-item">
+                                <span class="nav-link text-light">📧 @Context.Session.GetString("UserEmail")</span>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link btn btn-outline-light btn-sm ms-2" href="/Auth/Logout">Uitloggen</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link btn btn-outline-light btn-sm" href="/Auth/Login">Inloggen</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link btn btn-primary btn-sm ms-2" href="/Auth/Register">Registreren</a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container text-center">
+            &copy; 2025 - Euphonia - <a href="/Home/Privacy">Privacy</a>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+
+    @if (Context.Session.GetInt32("UserId") != null)
+    {
+        <script>
+            // Notificaties ophalen en weergeven
+            async function laadNotificaties() {
+                try {
+                    const response = await fetch('/Notificatie/GetOverzicht');
+                    if (!response.ok) return;
+
+                    const data = await response.json();
+                    
+                    // Update badge
+                    const badge = document.getElementById('notificatieBadge');
+                    if (data.ongelezenNotificaties > 0) {
+                        badge.textContent = data.ongelezenNotificaties > 99 ? '99+' : data.ongelezenNotificaties;
+                        badge.style.display = 'inline-block';
+                    } else {
+                        badge.style.display = 'none';
+                    }
+
+                    // Update dropdown lijst
+                    const lijst = document.getElementById('notificatiesList');
+                    if (data.recenteNotificaties && data.recenteNotificaties.length > 0) {
+                        lijst.innerHTML = data.recenteNotificaties.map(n => {
+                            const badgeClass = n.badgeClass || 'bg-info';
+                            const icoon = n.icoon || 'bi-bell';
+                            const isGelezenClass = n.isGelezen ? 'text-muted' : 'fw-bold';
+                            
+                            return `
+                                <li>
+                                    <a href="${n.link || '/Notificatie'}" class="dropdown-item py-2 ${n.isGelezen ? '' : 'bg-light'}">
+                                        <div class="d-flex align-items-start">
+                                            <span class="badge ${badgeClass} rounded-circle me-2" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">
+                                                <i class="${icoon}"></i>
+                                            </span>
+                                            <div class="flex-grow-1" style="min-width: 0;">
+                                                <div class="${isGelezenClass}" style="font-size: 0.9rem; white-space: normal; word-wrap: break-word;">
+                                                    ${escapeHtml(n.tekst || '')}
+                                                </div>
+                                                <small class="text-muted">
+                                                    <i class="bi bi-clock"></i> ${escapeHtml(n.tijdGeleden || '')}
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                            `;
+                        }).join('');
+                    } else {
+                        lijst.innerHTML = `
+                            <li class="text-center text-muted py-3">
+                                <i class="bi bi-inbox" style="font-size: 2rem;"></i>
+                                <p class="mb-0 mt-2">Geen notificaties</p>
+                            </li>
+                        `;
+                    }
+                } catch (error) {
+                    console.error('Fout bij laden notificaties:', error);
+                }
+            }
+
+            function escapeHtml(text) {
+                const div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            }
+
+            // Laad notificaties bij pagina load
+            laadNotificaties();
+
+            // Refresh notificaties elke 30 seconden
+            setInterval(laadNotificaties, 30000);
+
+            // Refresh wanneer dropdown wordt geopend
+            document.getElementById('notificatieDropdown')?.addEventListener('click', laadNotificaties);
+        </script>
+    }
+</body>
+</html>
