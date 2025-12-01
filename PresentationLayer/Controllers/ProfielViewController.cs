@@ -1,12 +1,14 @@
 using Microsoft.AspNetCore.Mvc;
 using Euphonia.BusinessLogicLayer.DTOs;
 using Euphonia.BusinessLogicLayer.Interfaces;
+using Euphonia.PresentationLayer.Filters;
 
 namespace Euphonia.PresentationLayer.Controllers
 {
     /// <summary>
     /// MVC Controller voor Profiel views
     /// </summary>
+    [SessionAuthorization]
     public class ProfielViewController : Controller
     {
         private readonly IProfielService _profielService;
@@ -16,11 +18,36 @@ namespace Euphonia.PresentationLayer.Controllers
             _profielService = profielService;
         }
 
+        private int GetUserId() => HttpContext.Session.GetInt32("UserId").Value;
+
         // GET: ProfielView
         public async Task<IActionResult> Index()
         {
+            var userId = GetUserId();
             var profielen = await _profielService.GetAllAsync();
-            return View(profielen);
+            // Filter to show only current user's profiles
+            var userProfielen = profielen.Where(p => p.UserID == userId);
+            return View(userProfielen);
+        }
+
+        // POST: ProfielView/SetActive/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> SetActive(int id)
+        {
+            var userId = GetUserId();
+            var success = await _profielService.SetActiveProfielAsync(userId, id);
+            
+            if (success)
+            {
+                TempData["SuccessMessage"] = "Profiel geactiveerd!";
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "Profiel niet gevonden.";
+            }
+            
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: ProfielView/Details/5
@@ -45,6 +72,9 @@ namespace Euphonia.PresentationLayer.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateProfielDto dto)
         {
+            // Zet automatisch het UserID uit sessie
+            dto.UserID = GetUserId();
+
             if (!ModelState.IsValid)
             {
                 return View(dto);
@@ -53,7 +83,7 @@ namespace Euphonia.PresentationLayer.Controllers
             try
             {
                 await _profielService.CreateAsync(dto);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Dashboard"); // Redirect naar Dashboard na aanmaken
             }
             catch (Exception ex)
             {

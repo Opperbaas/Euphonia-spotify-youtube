@@ -1,5 +1,6 @@
 using Euphonia.BusinessLogicLayer.DTOs;
 using Euphonia.BusinessLogicLayer.Interfaces;
+using Euphonia.PresentationLayer.Filters;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -8,6 +9,7 @@ namespace Euphonia.PresentationLayer.Controllers
     /// <summary>
     /// Controller voor notificatiebeheer
     /// </summary>
+    [SessionAuthorization]
     public class NotificatieController : Controller
     {
         private readonly INotificatieService _notificatieService;

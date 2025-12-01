@@ -1,12 +1,14 @@
 using Euphonia.BusinessLogicLayer.DTOs;
 using Euphonia.BusinessLogicLayer.Services;
 using Euphonia.BusinessLogicLayer.Interfaces;
+using Euphonia.PresentationLayer.Filters;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Threading.Tasks;
 
 namespace PresentationLayer.Controllers
 {
+    [SessionAuthorization]
     public class StemmingController : Controller
     {
         private readonly IStemmingService _stemmingService;
@@ -18,16 +20,13 @@ namespace PresentationLayer.Controllers
             _muziekService = muziekService;
         }
 
+        private int GetUserId() => HttpContext.Session.GetInt32("UserId").Value;
+
         // GET: Stemming
         public async Task<IActionResult> Index()
         {
-            var userId = HttpContext.Session.GetInt32("UserId");
-            if (userId == null)
-            {
-                return RedirectToAction("Login", "Auth");
-            }
-
-            var stemmingen = await _stemmingService.GetStemmingenByUserIdAsync(userId.Value);
+            var userId = GetUserId();
+            var stemmingen = await _stemmingService.GetStemmingenByUserIdAsync(userId);
             
             // Laad gekoppelde muziek voor elke stemming
             var stemmingList = stemmingen.ToList();
@@ -43,14 +42,9 @@ namespace PresentationLayer.Controllers
         // GET: Stemming/Create
         public async Task<IActionResult> Create()
         {
-            var userId = HttpContext.Session.GetInt32("UserId");
-            if (userId == null)
-            {
-                return RedirectToAction("Login", "Auth");
-            }
-
+            var userId = GetUserId();
             await LoadStemmingTypes();
-            await LoadAllMuziek(userId.Value);
+            await LoadAllMuziek(userId);
             return View();
         }
 
@@ -59,11 +53,7 @@ namespace PresentationLayer.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateStemmingDto createDto)
         {
-            var userId = HttpContext.Session.GetInt32("UserId");
-            if (userId == null)
-            {
-                return RedirectToAction("Login", "Auth");
-            }
+            var userId = GetUserId();
 
             if (!ModelState.IsValid)
             {
@@ -71,7 +61,7 @@ namespace PresentationLayer.Controllers
                 return View(createDto);
             }
 
-            await _stemmingService.CreateStemmingAsync(createDto, userId.Value);
+            await _stemmingService.CreateStemmingAsync(createDto, userId);
             TempData["SuccessMessage"] = "Stemming succesvol toegevoegd!";
             return RedirectToAction(nameof(Index));
         }
@@ -79,11 +69,7 @@ namespace PresentationLayer.Controllers
         // GET: Stemming/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
-            var userId = HttpContext.Session.GetInt32("UserId");
-            if (userId == null)
-            {
-                return RedirectToAction("Login", "Auth");
-            }
+            var userId = GetUserId();
 
             var stemming = await _stemmingService.GetStemmingByIdAsync(id);
             if (stemming == null || stemming.UserID != userId)
@@ -92,7 +78,7 @@ namespace PresentationLayer.Controllers
             }
 
             await LoadStemmingTypes();
-            await LoadAllMuziek(userId.Value);
+            await LoadAllMuziek(userId);
 
             // Haal gekoppelde muziek op
             var gekoppeldeMuziek = await _stemmingService.GetMuziekByStemmingIdAsync(id);
@@ -114,11 +100,7 @@ namespace PresentationLayer.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(UpdateStemmingDto updateDto)
         {
-            var userId = HttpContext.Session.GetInt32("UserId");
-            if (userId == null)
-            {
-                return RedirectToAction("Login", "Auth");
-            }
+            var userId = GetUserId();
 
             if (!ModelState.IsValid)
             {
@@ -126,7 +108,7 @@ namespace PresentationLayer.Controllers
                 return View(updateDto);
             }
 
-            var success = await _stemmingService.UpdateStemmingAsync(updateDto, userId.Value);
+            var success = await _stemmingService.UpdateStemmingAsync(updateDto, userId);
             if (!success)
             {
                 return NotFound();
@@ -139,11 +121,7 @@ namespace PresentationLayer.Controllers
         // GET: Stemming/Delete/5
         public async Task<IActionResult> Delete(int id)
         {
-            var userId = HttpContext.Session.GetInt32("UserId");
-            if (userId == null)
-            {
-                return RedirectToAction("Login", "Auth");
-            }
+            var userId = GetUserId();
 
             var stemming = await _stemmingService.GetStemmingByIdAsync(id);
             if (stemming == null || stemming.UserID != userId)
@@ -159,13 +137,9 @@ namespace PresentationLayer.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var userId = HttpContext.Session.GetInt32("UserId");
-            if (userId == null)
-            {
-                return RedirectToAction("Login", "Auth");
-            }
+            var userId = GetUserId();
 
-            var success = await _stemmingService.DeleteStemmingAsync(id, userId.Value);
+            var success = await _stemmingService.DeleteStemmingAsync(id, userId);
             if (!success)
             {
                 return NotFound();
@@ -178,11 +152,7 @@ namespace PresentationLayer.Controllers
         // GET: Stemming/LinkMuziek/5
         public async Task<IActionResult> LinkMuziek(int id)
         {
-            var userId = HttpContext.Session.GetInt32("UserId");
-            if (userId == null)
-            {
-                return RedirectToAction("Login", "Auth");
-            }
+            var userId = GetUserId();
 
             var stemming = await _stemmingService.GetStemmingByIdAsync(id);
             if (stemming == null || stemming.UserID != userId)
@@ -190,7 +160,7 @@ namespace PresentationLayer.Controllers
                 return NotFound();
             }
 
-            await LoadAllMuziek(userId.Value);
+            await LoadAllMuziek(userId);
             
             // Haal gekoppelde muziek op
             var gekoppeldeMuziek = await _stemmingService.GetMuziekByStemmingIdAsync(id);
@@ -205,13 +175,9 @@ namespace PresentationLayer.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> LinkMuziek(int stemmingId, int muziekId)
         {
-            var userId = HttpContext.Session.GetInt32("UserId");
-            if (userId == null)
-            {
-                return RedirectToAction("Login", "Auth");
-            }
+            var userId = GetUserId();
 
-            var success = await _stemmingService.LinkMuziekToStemmingAsync(stemmingId, muziekId, userId.Value);
+            var success = await _stemmingService.LinkMuziekToStemmingAsync(stemmingId, muziekId, userId);
             if (success)
             {
                 TempData["SuccessMessage"] = "Muziek succesvol gekoppeld!";
@@ -229,13 +195,9 @@ namespace PresentationLayer.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> UnlinkMuziek(int stemmingId, int muziekId)
         {
-            var userId = HttpContext.Session.GetInt32("UserId");
-            if (userId == null)
-            {
-                return RedirectToAction("Login", "Auth");
-            }
+            var userId = GetUserId();
 
-            var success = await _stemmingService.UnlinkMuziekFromStemmingAsync(stemmingId, muziekId, userId.Value);
+            var success = await _stemmingService.UnlinkMuziekFromStemmingAsync(stemmingId, muziekId, userId);
             if (success)
             {
                 TempData["SuccessMessage"] = "Muziek ontkoppeld!";

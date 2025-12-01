@@ -2,12 +2,14 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Euphonia.BusinessLogicLayer.Interfaces;
 using Euphonia.BusinessLogicLayer.DTOs;
+using Euphonia.PresentationLayer.Filters;
 
 namespace Euphonia.PresentationLayer.Controllers
 {
     /// <summary>
     /// MVC Controller voor Muziek beheer (met Views)
     /// </summary>
+    [SessionAuthorization]
     public class MuziekViewController : Controller
     {
         private readonly IMuziekService _service;

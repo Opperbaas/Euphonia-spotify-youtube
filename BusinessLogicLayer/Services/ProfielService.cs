@@ -35,6 +35,36 @@ namespace Euphonia.BusinessLogicLayer.Services
             return profiel == null ? null : MapToDto(profiel);
         }
 
+        public async Task<ProfielDto?> GetActiveProfielAsync(int userID)
+        {
+            var activeProfiel = await _unitOfWork.ProfielRepository.GetActiveByUserIdAsync(userID);
+            return activeProfiel == null ? null : MapToDto(activeProfiel);
+        }
+
+        public async Task<bool> SetActiveProfielAsync(int userID, int profielID)
+        {
+            // Get all user's profiles
+            var allProfiles = await _unitOfWork.ProfielRepository.GetAllByUserIdAsync(userID);
+            var profilesList = allProfiles.ToList();
+
+            // Find target profile
+            var targetProfile = profilesList.FirstOrDefault(p => p.ProfielID == profielID);
+            if (targetProfile == null) return false;
+
+            // Deactivate all profiles
+            foreach (var profile in profilesList)
+            {
+                profile.IsActive = false;
+            }
+
+            // Activate target profile
+            targetProfile.IsActive = true;
+
+            // Save changes
+            await _unitOfWork.SaveChangesAsync();
+            return true;
+        }
+
         public async Task<IEnumerable<ProfielDto>> GetByGenreAsync(string genre)
         {
             var profielen = await _unitOfWork.ProfielRepository.GetByGenreAsync(genre);
@@ -94,7 +124,8 @@ namespace Euphonia.BusinessLogicLayer.Services
                 ProfielID = profiel.ProfielID,
                 UserID = profiel.UserID,
                 VoorkeurGenres = profiel.VoorkeurGenres,
-                Stemmingstags = profiel.Stemmingstags
+                Stemmingstags = profiel.Stemmingstags,
+                IsActive = profiel.IsActive
             };
         }
 

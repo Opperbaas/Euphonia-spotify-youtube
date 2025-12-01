@@ -8,6 +8,8 @@ namespace Euphonia.DataAccessLayer.Interfaces
     public interface IProfielRepository : IRepository<Profiel>
     {
         Task<Profiel?> GetByUserIDAsync(int userID);
+        Task<Profiel?> GetActiveByUserIdAsync(int userId);
+        Task<IEnumerable<Profiel>> GetAllByUserIdAsync(int userId);
         Task<IEnumerable<Profiel>> GetByGenreAsync(string genre);
     }
 }

@@ -9,6 +9,22 @@
     <a asp-action="Create" class="btn btn-success">➕ Nieuw Profiel</a>
 </div>
 
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["ErrorMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
 <hr />
 
 @if (Model != null && Model.Any())
@@ -18,20 +34,64 @@
             <thead class="table-dark">
                 <tr>
                     <th>ID</th>
-                    <th>User ID</th>
                     <th>Voorkeur Genres</th>
                     <th>Stemmingstags</th>
+                    <th>Status</th>
                     <th class="text-end">Acties</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr>
+                    <tr class="@(item.IsActive ? "table-success" : "")">
                         <td>@item.ProfielID</td>
-                        <td>@(item.UserID?.ToString() ?? "-")</td>
-                        <td>@(item.VoorkeurGenres ?? "-")</td>
-                        <td>@(item.Stemmingstags ?? "-")</td>
+                        <td>
+                            @if (!string.IsNullOrEmpty(item.VoorkeurGenres))
+                            {
+                                @foreach (var genre in item.VoorkeurGenres.Split(',').Take(3))
+                                {
+                                    <span class="badge bg-primary me-1">@genre.Trim()</span>
+                                }
+                                @if (item.VoorkeurGenres.Split(',').Length > 3)
+                                {
+                                    <span class="badge bg-secondary">+@(item.VoorkeurGenres.Split(',').Length - 3)</span>
+                                }
+                            }
+                            else
+                            {
+                                <span class="text-muted">-</span>
+                            }
+                        </td>
+                        <td>
+                            @if (!string.IsNullOrEmpty(item.Stemmingstags))
+                            {
+                                @foreach (var tag in item.Stemmingstags.Split(',').Take(3))
+                                {
+                                    <span class="badge bg-success me-1">@tag.Trim()</span>
+                                }
+                                @if (item.Stemmingstags.Split(',').Length > 3)
+                                {
+                                    <span class="badge bg-secondary">+@(item.Stemmingstags.Split(',').Length - 3)</span>
+                                }
+                            }
+                            else
+                            {
+                                <span class="text-muted">-</span>
+                            }
+                        </td>
+                        <td>
+                            @if (item.IsActive)
+                            {
+                                <span class="badge bg-success">✓ Actief</span>
+                            }
+                            else
+                            {
+                                <form asp-action="SetActive" asp-route-id="@item.ProfielID" method="post" style="display:inline;">
+                                    @Html.AntiForgeryToken()
+                                    <button type="submit" class="btn btn-sm btn-outline-primary">Activeer</button>
+                                </form>
+                            }
+                        </td>
                         <td class="text-end">
                             <a asp-action="Details" asp-route-id="@item.ProfielID" class="btn btn-sm btn-info">ℹ️ Details</a>
                             <a asp-action="Edit" asp-route-id="@item.ProfielID" class="btn btn-sm btn-primary">✏️ Bewerken</a>

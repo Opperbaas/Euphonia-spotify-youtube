@@ -25,6 +25,11 @@ namespace Euphonia.BusinessLogicLayer.Services
             var stemmingen = (await _unitOfWork.StemmingRepository.GetStemmingenByUserIdAsync(userId)).ToList();
             var alleMuziek = (await _unitOfWork.MuziekRepository.GetAllAsync()).ToList();
             var stemmingTypes = (await _unitOfWork.StemmingTypeRepository.GetAllTypesAsync()).ToList();
+            
+            // 🎯 Haal ACTIEF profiel op
+            var profiel = await _unitOfWork.ProfielRepository.GetActiveByUserIdAsync(userId);
+            dashboard.Profiel = profiel != null ? MapProfielToDto(profiel) : null;
+            dashboard.HeeftProfiel = profiel != null;
 
             // Algemene statistieken
             dashboard.TotaalStemmingen = stemmingen.Count;
@@ -241,8 +246,163 @@ namespace Euphonia.BusinessLogicLayer.Services
 
             // Genereer inzichten
             dashboard.Inzichten = GenereerInzichten(dashboard, stemmingen);
+            
+            // 🎯 Genereer profiel-based inzichten
+            if (dashboard.HeeftProfiel && dashboard.Profiel != null)
+            {
+                dashboard.ProfielInzichten = GenereerProfielInzichten(dashboard, alleMuziek, stemmingen);
+                
+                // 🎵 Genereer muziekaanbevelingen op basis van actief profiel
+                dashboard.AanbevolenMuziek = await GenereerMuziekAanbevelingen(dashboard.Profiel, alleMuziek, stemmingen, stemmingTypes);
+            }
 
             return dashboard;
+        }
+
+        // 🎯 Nieuwe method voor profiel mapping
+        private ProfielDto MapProfielToDto(DataAccessLayer.Models.Profiel profiel)
+        {
+            return new ProfielDto
+            {
+                ProfielID = profiel.ProfielID,
+                UserID = profiel.UserID,
+                VoorkeurGenres = profiel.VoorkeurGenres,
+                Stemmingstags = profiel.Stemmingstags,
+                IsActive = profiel.IsActive
+            };
+        }
+
+        // 🎵 Nieuwe method voor muziekaanbevelingen op basis van profiel
+        private async Task<List<MuziekDto>> GenereerMuziekAanbevelingen(
+            ProfielDto profiel,
+            List<DataAccessLayer.Models.Muziek> alleMuziek,
+            List<DataAccessLayer.Models.Stemming> stemmingen,
+            List<DataAccessLayer.Models.StemmingType> stemmingTypes)
+        {
+            var aanbevelingen = new List<MuziekDto>();
+            
+            if (string.IsNullOrWhiteSpace(profiel.Stemmingstags))
+            {
+                return aanbevelingen; // Geen tags = geen aanbevelingen
+            }
+
+            // Parse profiel tags
+            var profielTags = profiel.Stemmingstags
+                .Split(',')
+                .Select(t => t.Trim().ToLower())
+                .Where(t => !string.IsNullOrEmpty(t))
+                .ToList();
+
+            if (!profielTags.Any())
+            {
+                return aanbevelingen;
+            }
+
+            // Vind stemmingen die matchen met profiel tags
+            var matchingStemmingen = stemmingen
+                .Where(s => s.StemmingType != null && 
+                            s.StemmingType.Naam != null &&
+                            profielTags.Any(tag => s.StemmingType.Naam.ToLower().Contains(tag)))
+                .ToList();
+
+            if (!matchingStemmingen.Any())
+            {
+                return aanbevelingen;
+            }
+
+            // Verzamel muziek IDs van matching stemmingen met score
+            var muziekScores = new Dictionary<int, int>();
+            
+            foreach (var stemming in matchingStemmingen)
+            {
+                var gekoppeldeMuziek = await _unitOfWork.StemmingMuziekRepository.GetMuziekByStemmingIdAsync(stemming.StemmingID);
+                
+                foreach (var koppeling in gekoppeldeMuziek.Where(k => k.MuziekID.HasValue))
+                {
+                    var muziekId = koppeling.MuziekID!.Value;
+                    muziekScores[muziekId] = muziekScores.GetValueOrDefault(muziekId, 0) + 1;
+                }
+            }
+
+            // Sorteer op score en neem top 20
+            var topMuziekIds = muziekScores
+                .OrderByDescending(kvp => kvp.Value)
+                .Take(20)
+                .Select(kvp => kvp.Key)
+                .ToList();
+
+            // Map naar DTOs
+            foreach (var muziekId in topMuziekIds)
+            {
+                var muziek = alleMuziek.FirstOrDefault(m => m.MuziekID == muziekId);
+                if (muziek != null)
+                {
+                    aanbevelingen.Add(new MuziekDto
+                    {
+                        MuziekID = muziek.MuziekID,
+                        Titel = muziek.Titel,
+                        Artiest = muziek.Artiest,
+                        Bron = muziek.Bron
+                    });
+                }
+            }
+
+            return aanbevelingen;
+        }
+
+        // 🎯 Nieuwe method voor profiel-based inzichten
+        private List<string> GenereerProfielInzichten(DashboardDto dashboard, List<DataAccessLayer.Models.Muziek> alleMuziek, List<DataAccessLayer.Models.Stemming> stemmingen)
+        {
+            var inzichten = new List<string>();
+            var profiel = dashboard.Profiel!;
+
+            // Inzicht 1: Genre matching
+            if (!string.IsNullOrWhiteSpace(profiel.VoorkeurGenres))
+            {
+                var voorkeurGenres = profiel.VoorkeurGenres.Split(',').Select(g => g.Trim()).ToList();
+                var muziekMetBron = alleMuziek.Where(m => !string.IsNullOrWhiteSpace(m.Bron)).ToList();
+                
+                if (muziekMetBron.Any())
+                {
+                    // Simuleer genre matching (in werkelijkheid zou je MuziekAnalyse gebruiken)
+                    var matchingMuziek = muziekMetBron.Take(5).ToList();
+                    inzichten.Add($"Je hebt {voorkeurGenres.Count} voorkeur genre(s) ingesteld: {string.Join(", ", voorkeurGenres)}");
+                }
+            }
+
+            // Inzicht 2: Stemmingstags matching
+            if (!string.IsNullOrWhiteSpace(profiel.Stemmingstags))
+            {
+                var tags = profiel.Stemmingstags.Split(',').Select(t => t.Trim()).ToList();
+                var matchingStemmingen = stemmingen
+                    .Where(s => s.StemmingType != null && tags.Any(tag => 
+                        s.StemmingType.Naam != null && 
+                        s.StemmingType.Naam.Contains(tag, StringComparison.OrdinalIgnoreCase)))
+                    .ToList();
+
+                if (matchingStemmingen.Any())
+                {
+                    var percentage = Math.Round((double)matchingStemmingen.Count / stemmingen.Count * 100, 1);
+                    inzichten.Add($"{percentage}% van je stemmingen matchen je focus tags ({string.Join(", ", tags)})");
+                }
+                else
+                {
+                    inzichten.Add($"💡 Tip: Registreer meer stemmingen met je focus tags: {string.Join(", ", tags)}");
+                }
+            }
+
+            // Inzicht 3: Profiel volledigheid
+            if (string.IsNullOrWhiteSpace(profiel.VoorkeurGenres))
+            {
+                inzichten.Add("⚠️ Je profiel heeft nog geen voorkeur genres. Voeg ze toe voor betere aanbevelingen!");
+            }
+
+            if (string.IsNullOrWhiteSpace(profiel.Stemmingstags))
+            {
+                inzichten.Add("⚠️ Je profiel heeft nog geen stemmingstags. Voeg ze toe om je favoriete stemmingen te tracken!");
+            }
+
+            return inzichten;
         }
 
         private List<string> GenereerInzichten(DashboardDto dashboard, List<Euphonia.DataAccessLayer.Models.Stemming> stemmingen)

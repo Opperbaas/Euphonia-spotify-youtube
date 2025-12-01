@@ -13,6 +13,70 @@
         </div>
     </div>
 
+    <!-- 🎯 Profiel Status Banner -->
+    @if (!Model.HeeftProfiel)
+    {
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="alert alert-warning alert-dismissible fade show shadow-sm" role="alert">
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-person-circle fs-1 me-3"></i>
+                        <div>
+                            <h5 class="alert-heading mb-1">Welkom! Maak je profiel aan 🎉</h5>
+                            <p class="mb-2">Krijg gepersonaliseerde muziek aanbevelingen en betere inzichten door je voorkeuren in te stellen.</p>
+                            <a asp-controller="ProfielView" asp-action="Create" class="btn btn-warning btn-sm">
+                                <i class="bi bi-plus-circle"></i> Profiel Aanmaken
+                            </a>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card shadow-sm border-success">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-person-check-fill text-success fs-1 me-3"></i>
+                                <div>
+                                    <h5 class="mb-1">Je Profiel 🎵</h5>
+                                    @if (!string.IsNullOrWhiteSpace(Model.Profiel?.VoorkeurGenres))
+                                    {
+                                        <p class="mb-1">
+                                            <strong>Favoriete Genres:</strong> 
+                                            @foreach (var genre in Model.Profiel.VoorkeurGenres.Split(',').Select(g => g.Trim()))
+                                            {
+                                                <span class="badge bg-primary me-1">@genre</span>
+                                            }
+                                        </p>
+                                    }
+                                    @if (!string.IsNullOrWhiteSpace(Model.Profiel?.Stemmingstags))
+                                    {
+                                        <p class="mb-0">
+                                            <strong>Focus Stemmingen:</strong> 
+                                            @foreach (var tag in Model.Profiel.Stemmingstags.Split(',').Select(t => t.Trim()))
+                                            {
+                                                <span class="badge bg-success me-1">@tag</span>
+                                            }
+                                        </p>
+                                    }
+                                </div>
+                            </div>
+                            <a asp-controller="ProfielView" asp-action="Edit" asp-route-id="@Model.Profiel?.ProfielID" class="btn btn-sm btn-outline-primary">
+                                <i class="bi bi-pencil"></i> Bewerken
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
     <!-- Algemene Statistieken Cards -->
     <div class="row mb-4">
         <div class="col-md-3">
@@ -109,6 +173,127 @@
                                     </div>
                                 </div>
                             }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    <!-- 🎯 Profiel Inzichten Section -->
+    @if (Model.HeeftProfiel && Model.ProfielInzichten.Any())
+    {
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card shadow">
+                    <div class="card-header" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                        <h5 class="mb-0 text-white"><i class="bi bi-person-heart"></i> Profiel-Gebaseerde Inzichten</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            @foreach (var inzicht in Model.ProfielInzichten)
+                            {
+                                <div class="col-md-6 mb-3">
+                                    <div class="alert alert-light border-start border-success border-4 mb-0">
+                                        @if (inzicht.Contains("⚠️"))
+                                        {
+                                            <i class="bi bi-exclamation-triangle-fill text-warning"></i>
+                                        }
+                                        else if (inzicht.Contains("💡"))
+                                        {
+                                            <i class="bi bi-lightbulb-fill text-info"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="bi bi-check-circle-fill text-success"></i>
+                                        }
+                                        @inzicht
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    <!-- 🎵 Aanbevolen Muziek Section -->
+    @if (Model.HeeftProfiel && Model.AanbevolenMuziek != null && Model.AanbevolenMuziek.Any())
+    {
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card shadow">
+                    <div class="card-header" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0 text-white"><i class="bi bi-music-note-list"></i> 🎵 Aanbevolen Muziek</h5>
+                            <span class="badge bg-white text-dark">Gebaseerd op je actieve profiel</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-muted mb-3">
+                            Deze muziek past bij je huidige stemmingsvoorkeuren: 
+                            @if (!string.IsNullOrWhiteSpace(Model.Profiel?.Stemmingstags))
+                            {
+                                @foreach (var tag in Model.Profiel.Stemmingstags.Split(',').Take(3).Select(t => t.Trim()))
+                                {
+                                    <span class="badge bg-success me-1">@tag</span>
+                                }
+                            }
+                        </p>
+                        <div class="row">
+                            @foreach (var muziek in Model.AanbevolenMuziek.Take(12))
+                            {
+                                <div class="col-md-4 col-lg-3 mb-3">
+                                    <div class="card h-100 border-0 shadow-sm hover-shadow">
+                                        <div class="card-body">
+                                            <div class="d-flex align-items-start mb-2">
+                                                <i class="bi bi-music-note-beamed text-primary fs-3 me-2"></i>
+                                                <div class="flex-grow-1">
+                                                    <h6 class="card-title mb-1 fw-bold" style="font-size: 0.95rem;">@muziek.Titel</h6>
+                                                    <p class="card-text text-muted mb-2" style="font-size: 0.85rem;">
+                                                        <i class="bi bi-person-fill"></i> @muziek.Artiest
+                                                    </p>
+                                                    <span class="badge bg-info">@muziek.Bron</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                        @if (Model.AanbevolenMuziek.Count == 0)
+                        {
+                            <div class="alert alert-info">
+                                <i class="bi bi-info-circle"></i> Nog geen aanbevelingen beschikbaar. 
+                                Registreer stemmingen die matchen met je profiel tags om gepersonaliseerde muziek te ontdekken!
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else if (Model.HeeftProfiel && (Model.AanbevolenMuziek == null || !Model.AanbevolenMuziek.Any()))
+    {
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="alert alert-info shadow-sm">
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-info-circle fs-3 me-3"></i>
+                        <div>
+                            <h5 class="alert-heading mb-1">Nog geen muziekaanbevelingen</h5>
+                            <p class="mb-2">
+                                Registreer stemmingen die matchen met je profiel tags 
+                                @if (!string.IsNullOrWhiteSpace(Model.Profiel?.Stemmingstags))
+                                {
+                                    <span>(@Model.Profiel.Stemmingstags)</span>
+                                }
+                                en koppel daar muziek aan om gepersonaliseerde aanbevelingen te krijgen!
+                            </p>
+                            <a asp-controller="Stemming" asp-action="Create" class="btn btn-info btn-sm">
+                                <i class="bi bi-plus-circle"></i> Stemming Registreren
+                            </a>
                         </div>
                     </div>
                 </div>

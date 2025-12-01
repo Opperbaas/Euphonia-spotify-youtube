@@ -10,6 +10,8 @@ namespace Euphonia.BusinessLogicLayer.Interfaces
         Task<IEnumerable<ProfielDto>> GetAllAsync();
         Task<ProfielDto?> GetByIdAsync(int id);
         Task<ProfielDto?> GetByUserIDAsync(int userID);
+        Task<ProfielDto?> GetActiveProfielAsync(int userID);
+        Task<bool> SetActiveProfielAsync(int userID, int profielID);
         Task<IEnumerable<ProfielDto>> GetByGenreAsync(string genre);
         Task<ProfielDto> CreateAsync(CreateProfielDto dto);
         Task<ProfielDto?> UpdateAsync(UpdateProfielDto dto);

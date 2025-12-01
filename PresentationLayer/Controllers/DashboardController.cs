@@ -1,9 +1,11 @@
 using Euphonia.BusinessLogicLayer.Interfaces;
+using Euphonia.PresentationLayer.Filters;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace PresentationLayer.Controllers
 {
+    [SessionAuthorization]
     public class DashboardController : Controller
     {
         private readonly IDashboardService _dashboardService;
@@ -16,13 +18,8 @@ namespace PresentationLayer.Controllers
         // GET: Dashboard
         public async Task<IActionResult> Index()
         {
-            var userId = HttpContext.Session.GetInt32("UserId");
-            if (userId == null)
-            {
-                return RedirectToAction("Login", "Auth");
-            }
-
-            var dashboardData = await _dashboardService.GetDashboardDataAsync(userId.Value);
+            var userId = HttpContext.Session.GetInt32("UserId").Value;
+            var dashboardData = await _dashboardService.GetDashboardDataAsync(userId);
             return View(dashboardData);
         }
     }

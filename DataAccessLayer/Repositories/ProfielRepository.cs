@@ -20,6 +20,19 @@ namespace Euphonia.DataAccessLayer.Repositories
                 .FirstOrDefaultAsync(p => p.UserID == userID);
         }
 
+        public async Task<Profiel?> GetActiveByUserIdAsync(int userId)
+        {
+            return await _context.Set<Profiel>()
+                .FirstOrDefaultAsync(p => p.UserID == userId && p.IsActive);
+        }
+
+        public async Task<IEnumerable<Profiel>> GetAllByUserIdAsync(int userId)
+        {
+            return await _context.Set<Profiel>()
+                .Where(p => p.UserID == userId)
+                .ToListAsync();
+        }
+
         public async Task<IEnumerable<Profiel>> GetByGenreAsync(string genre)
         {
             return await _context.Set<Profiel>()

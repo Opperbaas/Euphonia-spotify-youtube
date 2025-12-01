@@ -107,3 +107,19 @@ footer {
 .text-danger h3 {
     font-weight: 500;
 }
+
+/* Music Recommendation Card Hover Effect */
+.hover-shadow {
+    transition: all 0.3s ease;
+}
+
+.hover-shadow:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Profile Active Row Highlight */
+.table-success {
+    background-color: #d1e7dd !important;
+}
+

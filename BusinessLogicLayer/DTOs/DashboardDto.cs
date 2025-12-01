@@ -14,6 +14,10 @@ namespace Euphonia.BusinessLogicLayer.DTOs
         public int TotaalGekoppeldeMuziek { get; set; }
         public DateTime? LaatsteStemmingDatum { get; set; }
         
+        // Profiel informatie
+        public ProfielDto? Profiel { get; set; }
+        public bool HeeftProfiel { get; set; }
+        
         // Stemming statistieken
         public List<StemmingTypeStatistiekDto> StemmingTypeStatistieken { get; set; } = new();
         public StemmingTypeDto? MeestVoorkomendeeStemming { get; set; }
@@ -24,8 +28,15 @@ namespace Euphonia.BusinessLogicLayer.DTOs
         public List<MuziekStemmingCorrelatie> MuziekStemmingCorrelaties { get; set; } = new();
         public List<MuziekDto> MeestGekoppeldeMuziek { get; set; } = new();
         
+        // Genre statistieken (gebaseerd op profiel)
+        public List<GenreStatistiekDto> GenreStatistieken { get; set; } = new();
+        
         // Inzichten
         public List<string> Inzichten { get; set; } = new();
+        public List<string> ProfielInzichten { get; set; } = new();
+        
+        // Aanbevolen muziek (gebaseerd op actief profiel)
+        public List<MuziekDto> AanbevolenMuziek { get; set; } = new();
     }
 
     public class StemmingTypeStatistiekDto
@@ -57,5 +68,13 @@ namespace Euphonia.BusinessLogicLayer.DTOs
         public string? Artiest { get; set; }
         public string? StemmingType { get; set; }
         public int AantalKeerGekoppeld { get; set; }
+    }
+
+    public class GenreStatistiekDto
+    {
+        public string? Genre { get; set; }
+        public int AantalLiedjes { get; set; }
+        public bool IsVoorkeur { get; set; }
+        public double Percentage { get; set; }
     }
 }

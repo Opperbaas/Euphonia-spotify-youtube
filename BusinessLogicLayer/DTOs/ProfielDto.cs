@@ -9,6 +9,7 @@ namespace Euphonia.BusinessLogicLayer.DTOs
         public int? UserID { get; set; }
         public string? VoorkeurGenres { get; set; }
         public string? Stemmingstags { get; set; }
+        public bool IsActive { get; set; }
     }
 
     /// <summary>
@@ -19,6 +20,7 @@ namespace Euphonia.BusinessLogicLayer.DTOs
         public int? UserID { get; set; }
         public string? VoorkeurGenres { get; set; }
         public string? Stemmingstags { get; set; }
+        public bool IsActive { get; set; } = false;
     }
 
     /// <summary>
@@ -30,5 +32,6 @@ namespace Euphonia.BusinessLogicLayer.DTOs
         public int? UserID { get; set; }
         public string? VoorkeurGenres { get; set; }
         public string? Stemmingstags { get; set; }
+        public bool IsActive { get; set; }
     }
 }

@@ -15,17 +15,38 @@
     <div class="col-md-6">
         <form asp-action="Edit" method="post">
             <input type="hidden" asp-for="ProfielID" />
+            <input type="hidden" asp-for="UserID" />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             
-            <div class="mb-3">
-                <label asp-for="UserID" class="form-label"></label>
-                <input asp-for="UserID" class="form-control" type="number" />
-                <span asp-validation-for="UserID" class="text-danger"></span>
-            </div>
+            <!-- UserID is verborgen, niet bewerkbaar -->
 
             <div class="mb-3">
-                <label asp-for="VoorkeurGenres" class="form-label"></label>
-                <input asp-for="VoorkeurGenres" class="form-control" />
+                <label asp-for="VoorkeurGenres" class="form-label">Voorkeur Genres</label>
+                <small class="form-text text-muted d-block mb-2">Selecteer maximaal 5 genres</small>
+                <select id="genreSelect" class="form-select" multiple size="10">
+                    <option value="Pop">Pop</option>
+                    <option value="Rock">Rock</option>
+                    <option value="Hip Hop">Hip Hop</option>
+                    <option value="R&B">R&B</option>
+                    <option value="Jazz">Jazz</option>
+                    <option value="Classical">Classical</option>
+                    <option value="Electronic">Electronic</option>
+                    <option value="Country">Country</option>
+                    <option value="Reggae">Reggae</option>
+                    <option value="Blues">Blues</option>
+                    <option value="Metal">Metal</option>
+                    <option value="Folk">Folk</option>
+                    <option value="Latin">Latin</option>
+                    <option value="Soul">Soul</option>
+                    <option value="Funk">Funk</option>
+                    <option value="Disco">Disco</option>
+                    <option value="Indie">Indie</option>
+                    <option value="Alternative">Alternative</option>
+                    <option value="Punk">Punk</option>
+                    <option value="K-Pop">K-Pop</option>
+                </select>
+                <input type="hidden" asp-for="VoorkeurGenres" id="genreHiddenInput" />
+                <div id="selectedGenres" class="mt-2"></div>
                 <span asp-validation-for="VoorkeurGenres" class="text-danger"></span>
             </div>
 
@@ -45,4 +66,49 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const genreSelect = document.getElementById('genreSelect');
+            const hiddenInput = document.getElementById('genreHiddenInput');
+            const selectedGenresDiv = document.getElementById('selectedGenres');
+            const maxGenres = 5;
+
+            // Pre-selecteer bestaande genres
+            const existingGenres = hiddenInput.value.split(',').map(g => g.trim()).filter(g => g);
+            Array.from(genreSelect.options).forEach(option => {
+                if (existingGenres.includes(option.value)) {
+                    option.selected = true;
+                }
+            });
+
+            // Toon initiële selectie
+            updateSelectedGenres();
+
+            genreSelect.addEventListener('change', function() {
+                const selectedOptions = Array.from(this.selectedOptions);
+                
+                // Limiteer tot 5 genres
+                if (selectedOptions.length > maxGenres) {
+                    alert(`Je kunt maximaal ${maxGenres} genres selecteren`);
+                    selectedOptions[selectedOptions.length - 1].selected = false;
+                    return;
+                }
+
+                updateSelectedGenres();
+            });
+
+            function updateSelectedGenres() {
+                const selectedOptions = Array.from(genreSelect.selectedOptions);
+                const genres = selectedOptions.map(opt => opt.value);
+                hiddenInput.value = genres.join(', ');
+
+                selectedGenresDiv.innerHTML = genres.length > 0 
+                    ? '<strong>Geselecteerd:</strong> ' + genres.map(g => 
+                        `<span class="badge bg-primary me-1">${g}</span>`
+                    ).join('')
+                    : '';
+            }
+        });
+    </script>
 }
