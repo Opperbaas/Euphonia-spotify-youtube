@@ -24,5 +24,8 @@ namespace Euphonia.DataAccessLayer.Models
         [MaxLength(255)]
         [Column("stemmingstags")]
         public string? Stemmingstags { get; set; }
+
+        [Column("isActive")]
+        public bool IsActive { get; set; } = false;
     }
 }
