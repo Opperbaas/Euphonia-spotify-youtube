@@ -24,7 +24,7 @@ namespace Euphonia.Tests.UnitTests.Services
         [Fact]
         public async Task GetByIdAsync_ReturnsProfielDto_WhenProfielExists()
         {
-            // Arrange - Test data voorbereiden
+            
             var testProfiel = new Profiel
             {
                 ProfielID = 1,
@@ -37,10 +37,10 @@ namespace Euphonia.Tests.UnitTests.Services
             _mockProfielRepository.Setup(r => r.GetByIdAsync(1))
                 .ReturnsAsync(testProfiel);
 
-            // Act - Methode uitvoeren
+            
             var result = await _service.GetByIdAsync(1);
 
-            // Assert - Resultaat controleren
+            
             Assert.NotNull(result);
             Assert.Equal(1, result.ProfielID);
             Assert.Equal("Rock,Pop", result.VoorkeurGenres);
