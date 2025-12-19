@@ -19,7 +19,7 @@ namespace Euphonia.PresentationLayer.Controllers
         // GET: Auth/Login
         public IActionResult Login()
         {
-            // Als al ingelogd, redirect naar home
+            
             if (HttpContext.Session.GetInt32("UserId") != null)
             {
                 return RedirectToAction("Index", "Home");

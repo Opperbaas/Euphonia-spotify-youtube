@@ -10,9 +10,7 @@ using Euphonia.Tests.TestHelpers;
 
 namespace Euphonia.Tests.UnitTests.Controllers
 {
-    /// <summary>
-    /// Unit tests voor ProfielViewController
-    /// </summary>
+    
     public class ProfielViewControllerTests
     {
         private readonly Mock<IProfielService> _mockProfielService;

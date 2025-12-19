@@ -11,6 +11,9 @@ namespace Euphonia.BusinessLogicLayer.DTOs
         public string? Titel { get; set; }
         public string? Artiest { get; set; }
         public string? Bron { get; set; }
+        public string? YouTubeVideoId { get; set; }
+        public string? ThumbnailUrl { get; set; }
+        public string? SpotifyTrackId { get; set; }
         
         // Optioneel: analyses meegeven
         public List<MuziekAnalyseDto>? Analyses { get; set; }
@@ -24,6 +27,9 @@ namespace Euphonia.BusinessLogicLayer.DTOs
         public string Titel { get; set; } = string.Empty;
         public string Artiest { get; set; } = string.Empty;
         public string? Bron { get; set; }
+        public string? YouTubeVideoId { get; set; }
+        public string? ThumbnailUrl { get; set; }
+        public string? SpotifyTrackId { get; set; }
     }
 
     /// <summary>

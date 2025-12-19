@@ -26,6 +26,18 @@ namespace Euphonia.DataAccessLayer.Models
         [Column("bron")]
         public string? Bron { get; set; }
 
+        [MaxLength(50)]
+        [Column("youtubeVideoId")]
+        public string? YouTubeVideoId { get; set; }
+
+        [MaxLength(512)]
+        [Column("youtubeThumbnailUrl")]
+        public string? YouTubeThumbnailUrl { get; set; }
+
+        [MaxLength(50)]
+        [Column("spotifyTrackId")]
+        public string? SpotifyTrackId { get; set; }
+
         // Navigation properties
         public virtual ICollection<MuziekAnalyse> Analyses { get; set; } = new List<MuziekAnalyse>();
         public virtual ICollection<StemmingMuziek> StemmingMuzieks { get; set; } = new List<StemmingMuziek>();

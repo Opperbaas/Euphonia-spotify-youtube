@@ -20,14 +20,10 @@ namespace Euphonia.BusinessLogicLayer.Interfaces
         Task<ExternalMusicSearchResultDto?> GetTrackByIdAsync(string trackId);
     }
 
-    /// <summary>
-    /// Interface voor YouTube Data API integratie
-    /// </summary>
+    
     public interface IYouTubeService
     {
-        /// <summary>
-        /// Haalt metadata op van een YouTube video
-        /// </summary>
+        
         Task<ExternalMusicSearchResultDto?> GetVideoMetadataAsync(string videoUrl);
 
         /// <summary>

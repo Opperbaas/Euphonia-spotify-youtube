@@ -19,10 +19,57 @@
 else
 {
     <div class="table-responsive">
+
+    <!-- YouTube Play Modal (vooraf gebruikt door "Afspelen" knoppen) -->
+    <div class="modal fade" id="youtubePlayModal" tabindex="-1" aria-labelledby="youtubePlayModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="youtubePlayModalLabel">Afspelen</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="ratio ratio-16x9">
+                        <iframe id="youtubePlayIframe" src="" title="YouTube player" allow="autoplay; encrypted-media" allowfullscreen frameborder="0"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @section Scripts {
+        <script>
+            // Open modal en laad YouTube iframe met autoplay
+            function previewYouTubeVideo(videoIdOrUrl) {
+                if (!videoIdOrUrl) return;
+                const id = (function(v) {
+                    // if already 11-char id
+                    if (/^[a-zA-Z0-9_-]{11}$/.test(v)) return v;
+                    try {
+                        const u = new URL(v);
+                        if (u.hostname.includes('youtu.be')) return u.pathname.slice(1);
+                        if (u.searchParams.has('v')) return u.searchParams.get('v');
+                        const parts = u.pathname.split('/'); return parts.pop() || v;
+                    } catch (e) { return v; }
+                })(videoIdOrUrl);
+
+                const iframe = document.getElementById('youtubePlayIframe');
+                iframe.src = `https://www.youtube.com/embed/${id}?autoplay=1&rel=0&modestbranding=1`;
+                const modalEl = document.getElementById('youtubePlayModal');
+                const modal = new bootstrap.Modal(modalEl);
+                modal.show();
+                // stop video when modal hidden
+                modalEl.addEventListener('hidden.bs.modal', function () {
+                    iframe.src = '';
+                }, { once: true });
+            }
+        </script>
+    }
         <table class="table table-striped table-hover">
             <thead class="table-dark">
                 <tr>
                     <th>ID</th>
+                    <th>Miniatuur</th>
                     <th>Titel</th>
                     <th>Artiest</th>
                     <th>Bron</th>
@@ -33,16 +80,47 @@ else
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>@item.MuziekID</td>
-                        <td>@item.Titel</td>
-                        <td>@item.Artiest</td>
-                        <td>@(item.Bron ?? "-")</td>
-                        <td>
-                            <a asp-action="Details" asp-route-id="@item.MuziekID" class="btn btn-sm btn-info">👁️ Details</a>
-                            <a asp-action="Edit" asp-route-id="@item.MuziekID" class="btn btn-sm btn-warning">✏️ Bewerk</a>
-                            <a asp-action="Delete" asp-route-id="@item.MuziekID" class="btn btn-sm btn-danger">🗑️ Verwijder</a>
-                        </td>
-                    </tr>
+                            <td>@item.MuziekID</td>
+                            <td>
+                                @if (!string.IsNullOrEmpty(item.ThumbnailUrl))
+                                {
+                                    <img src="@item.ThumbnailUrl" alt="Thumb" style="width:60px;height:60px;object-fit:cover;border-radius:4px;" />
+                                }
+                                else
+                                {
+                                    <span class="text-muted">-</span>
+                                }
+                            </td>
+                            <td>@item.Titel</td>
+                            <td>@item.Artiest</td>
+                            <td>@(item.Bron ?? "-")</td>
+                            <td>
+                                @* Afspelen knop: als er een YouTubeVideoId is, open modal met embedded player; anders disabled *@
+                                @* Show Spotify play if present, else YouTube play if present, otherwise disabled *@
+                                @if (!string.IsNullOrEmpty(item.SpotifyTrackId))
+                                {
+                                    <button type="button" class="btn btn-sm btn-success me-1" onclick="previewSpotifyTrack('@item.SpotifyTrackId')" title="Afspelen (Spotify)">
+                                        <i class="bi bi-music-note-beamed"></i> Afspelen
+                                    </button>
+                                }
+                                else if (!string.IsNullOrEmpty(item.YouTubeVideoId))
+                                {
+                                    <button type="button" class="btn btn-sm btn-primary me-1" onclick="previewYouTubeVideo('@item.YouTubeVideoId')" title="Afspelen (YouTube)">
+                                        <i class="bi bi-play-fill"></i> Afspelen
+                                    </button>
+                                }
+                                else
+                                {
+                                    <button type="button" class="btn btn-sm btn-outline-secondary me-1" disabled title="Geen preview beschikbaar">
+                                        <i class="bi bi-play-fill"></i> Afspelen
+                                    </button>
+                                }
+
+                                <a asp-action="Details" asp-route-id="@item.MuziekID" class="btn btn-sm btn-info">👁️ Details</a>
+                                <a asp-action="Edit" asp-route-id="@item.MuziekID" class="btn btn-sm btn-warning">✏️ Bewerk</a>
+                                <a asp-action="Delete" asp-route-id="@item.MuziekID" class="btn btn-sm btn-danger">🗑️ Verwijder</a>
+                            </td>
+                        </tr>
                 }
             </tbody>
         </table>

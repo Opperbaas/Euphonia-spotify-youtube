@@ -51,6 +51,9 @@
                         <label asp-for="Bron" class="form-label"></label>
                         <input asp-for="Bron" class="form-control" placeholder="Optioneel" />
                         <span asp-validation-for="Bron" class="text-danger"></span>
+                        <input type="hidden" id="YouTubeVideoId" name="YouTubeVideoId" />
+                        <input type="hidden" id="YouTubeThumbnailUrl" name="ThumbnailUrl" />
+                        <input type="hidden" id="SpotifyTrackId" name="SpotifyTrackId" />
                     </div>
 
                     <div class="mb-3">
@@ -146,7 +149,7 @@
                     const seconds = (duration % 60).toString().padStart(2, '0');
                     
                     html += `
-                        <div class="list-group-item list-group-item-action" style="cursor: pointer;" onclick="selectSpotifyTrack('${escapeHtml(track.titel)}', '${escapeHtml(track.artiest)}', '${escapeHtml(track.externalUrl || '')}')">
+                        <div class="list-group-item list-group-item-action" style="cursor: pointer;" onclick="selectSpotifyTrack('${escapeHtml(track.titel)}', '${escapeHtml(track.artiest)}', '${escapeHtml(track.externalUrl || '')}', '${escapeHtml(track.externalId || '')}')">
                             <div class="d-flex w-100 justify-content-between align-items-center">
                                 <div class="d-flex align-items-center">
                                     ${track.albumImageUrl ? `<img src="${track.albumImageUrl}" alt="Album art" style="width: 50px; height: 50px; margin-right: 15px; border-radius: 4px;">` : ''}
@@ -214,9 +217,14 @@
                                     <h5 class="card-title">${escapeHtml(data.titel)}</h5>
                                     <p class="card-text"><small class="text-muted">Kanaal: ${escapeHtml(data.artiest)}</small></p>
                                     <p class="card-text"><small class="text-muted">Duur: ${minutes}:${seconds}</small></p>
-                                    <button type="button" class="btn btn-success" onclick="selectYouTubeVideo('${escapeHtml(data.titel)}', '${escapeHtml(data.artiest)}', '${escapeHtml(data.externalUrl || '')}')">
-                                        <i class="bi bi-check-circle"></i> Deze Gebruiken
-                                    </button>
+                                    <div class="d-flex gap-2">
+                                        <button type="button" class="btn btn-outline-primary" onclick="previewYouTubeVideo('${escapeHtml(data.externalId || data.externalUrl || '')}')">
+                                            <i class="bi bi-play-circle"></i> Preview
+                                        </button>
+                                        <button type="button" class="btn btn-success" onclick="selectYouTubeVideo('${escapeHtml(data.titel)}', '${escapeHtml(data.artiest)}', '${escapeHtml(data.externalUrl || '')}', '${escapeHtml(data.externalId || '')}', '${escapeHtml(data.albumImageUrl || '')}')">
+                                            <i class="bi bi-check-circle"></i> Deze Gebruiken
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -240,6 +248,11 @@
             document.getElementById('Titel').value = titel;
             document.getElementById('Artiest').value = artiest;
             document.getElementById('Bron').value = url || 'Spotify';
+            // spotify externalId passed as 4th parameter (optional)
+            if (document.getElementById('SpotifyTrackId')) {
+                const track = arguments.length >= 4 ? arguments[3] : '';
+                document.getElementById('SpotifyTrackId').value = track || '';
+            }
             
             // Switch naar manual tab
             const manualTab = new bootstrap.Tab(document.getElementById('manual-tab'));
@@ -253,6 +266,15 @@
             document.getElementById('Titel').value = titel;
             document.getElementById('Artiest').value = kanaal;
             document.getElementById('Bron').value = url || 'YouTube';
+            // Optioneel: bewaar video id en thumbnail in verborgen velden
+            if (document.getElementById('YouTubeVideoId')) {
+                document.getElementById('YouTubeVideoId').value = url ? extractYouTubeId(url) : '';
+            }
+            if (document.getElementById('YouTubeThumbnailUrl')) {
+                // thumbnail is passed as 5th parameter (optional)
+                const thumb = arguments.length >= 5 ? arguments[4] : '';
+                document.getElementById('YouTubeThumbnailUrl').value = thumb || '';
+            }
             
             // Switch naar manual tab
             const manualTab = new bootstrap.Tab(document.getElementById('manual-tab'));
@@ -260,6 +282,41 @@
             
             // Scroll naar form
             document.getElementById('Titel').focus();
+        }
+
+        // Open modal en laad YouTube iframe met autoplay
+        function previewYouTubeVideo(videoIdOrUrl) {
+            if (!videoIdOrUrl) return;
+            const id = extractYouTubeId(videoIdOrUrl) || videoIdOrUrl;
+            const iframe = document.getElementById('youtubePreviewIframe');
+            iframe.src = `https://www.youtube.com/embed/${id}?autoplay=1&rel=0&modestbranding=1`;
+            const modalEl = document.getElementById('youtubePreviewModal');
+            const modal = new bootstrap.Modal(modalEl);
+            modal.show();
+            // stop video when modal hidden
+            modalEl.addEventListener('hidden.bs.modal', function () {
+                iframe.src = '';
+            }, { once: true });
+        }
+
+        // Extract YouTube ID from full URL or id
+        function extractYouTubeId(url) {
+            try {
+                // If it's already an 11 char id
+                if (/^[a-zA-Z0-9_-]{11}$/.test(url)) return url;
+                const u = new URL(url);
+                if (u.hostname.includes('youtu.be')) {
+                    return u.pathname.slice(1);
+                }
+                if (u.searchParams.has('v')) {
+                    return u.searchParams.get('v');
+                }
+                // try last path segment (embed)
+                const parts = u.pathname.split('/');
+                return parts.pop() || '';
+            } catch (e) {
+                return '';
+            }
         }
 
         // Enter key support
@@ -278,3 +335,20 @@
         });
     </script>
 }
+
+<!-- YouTube Preview Modal -->
+<div class="modal fade" id="youtubePreviewModal" tabindex="-1" aria-labelledby="youtubePreviewModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="youtubePreviewModalLabel">YouTube Preview</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="ratio ratio-16x9">
+                    <iframe id="youtubePreviewIframe" src="" title="YouTube preview" allow="autoplay; encrypted-media" allowfullscreen frameborder="0"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -40,6 +40,22 @@
     </dl>
 </div>
 
+@if (!string.IsNullOrEmpty(Model.ThumbnailUrl))
+{
+    <div class="mb-3">
+        <img src="@Model.ThumbnailUrl" class="img-fluid rounded" alt="Thumbnail" style="max-width:320px;" />
+    </div>
+}
+
+@if (!string.IsNullOrEmpty(Model.YouTubeVideoId))
+{
+    <div class="mb-4">
+        <div class="ratio ratio-16x9">
+            <iframe src="https://www.youtube.com/embed/@Model.YouTubeVideoId" title="YouTube player" allow="autoplay; encrypted-media" allowfullscreen frameborder="0"></iframe>
+        </div>
+    </div>
+}
+
 <div>
     <a asp-action="Edit" asp-route-id="@Model.MuziekID" class="btn btn-primary">✏️ Bewerken</a>
     <a asp-action="Delete" asp-route-id="@Model.MuziekID" class="btn btn-danger">🗑️ Verwijderen</a>

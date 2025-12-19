@@ -7,10 +7,7 @@ using Euphonia.DataAccessLayer.Models;
 namespace Euphonia.Tests.UnitTests.Repositories
 {
     /// <summary>
-    /// Unit tests voor ProfielRepository
-    /// 
-    /// BELANGRIJK: Repository tests gebruiken GEEN MOCKS!
-    /// We gebruiken een in-memory database om de echte repository logic te testen.
+    /// onthoud: deze tests gebruiken een in-memory database voor isolatie en snelheid
     /// </summary>
     public class ProfielRepositoryTests : IDisposable
     {

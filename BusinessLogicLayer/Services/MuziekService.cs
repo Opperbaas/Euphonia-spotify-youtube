@@ -49,6 +49,9 @@ namespace Euphonia.BusinessLogicLayer.Services
                 Titel = dto.Titel,
                 Artiest = dto.Artiest,
                 Bron = dto.Bron
+                , YouTubeVideoId = dto.YouTubeVideoId
+                , YouTubeThumbnailUrl = dto.ThumbnailUrl
+                , SpotifyTrackId = dto.SpotifyTrackId
             };
 
             await _unitOfWork.MuziekRepository.AddAsync(muziek);
@@ -123,6 +126,9 @@ namespace Euphonia.BusinessLogicLayer.Services
                 Titel = muziek.Titel,
                 Artiest = muziek.Artiest,
                 Bron = muziek.Bron
+                , YouTubeVideoId = muziek.YouTubeVideoId
+                , ThumbnailUrl = muziek.YouTubeThumbnailUrl
+                , SpotifyTrackId = muziek.SpotifyTrackId
             };
         }
 
@@ -134,6 +140,8 @@ namespace Euphonia.BusinessLogicLayer.Services
                 Titel = muziek.Titel,
                 Artiest = muziek.Artiest,
                 Bron = muziek.Bron,
+                YouTubeVideoId = muziek.YouTubeVideoId,
+                ThumbnailUrl = muziek.YouTubeThumbnailUrl,
                 Analyses = muziek.Analyses?.Select(a => new MuziekAnalyseDto
                 {
                     AnalyseID = a.AnalyseID,
