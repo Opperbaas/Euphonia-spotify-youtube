@@ -8,7 +8,7 @@ Belangrijke instructies:
 - Voer nooit deze scripts zomaar in productie uit zonder review.
 - Als een script belangrijke schema-wijzigingen bevat die nog niet in EF-migraties staan, overweeg dan om die wijzigingen in een EF-migration vast te leggen.
 
-Wij verplaatsten op {date} de volgende bestanden naar deze map (niet-exhaustief):
+Wij verplaatten op 2025-12-21 (branch: gebruikersvriendelijkheid, commit: d7b5403) de volgende bestanden naar deze map:
 - FixUserIDIdentity_Simple.sql
 - FixUserIDIdentity.sql
 - FixHistoriekIDIdentity.sql
