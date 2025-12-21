@@ -78,3 +78,6 @@ ClientBin/
 orleans.codegen.cs
 
 .fake
+
+# Local project test template (not used)
+Tests/
