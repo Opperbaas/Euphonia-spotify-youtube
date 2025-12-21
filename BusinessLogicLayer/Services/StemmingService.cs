@@ -37,6 +37,49 @@ namespace Euphonia.BusinessLogicLayer.Services
 
         public async Task<StemmingDto> CreateStemmingAsync(CreateStemmingDto createDto, int userId)
         {
+            // Controleer of er al een bestaande stemming voor deze user + type is
+            var existing = await _unitOfWork.StemmingRepository.GetLatestByUserAndTypeAsync(userId, createDto.TypeID);
+
+            if (existing != null)
+            {
+                // Voeg nieuwe muziek toe aan bestaande stemming (vermijd duplicaten)
+                if (createDto.MuziekIDs != null && createDto.MuziekIDs.Count > 0)
+                {
+                    foreach (var muziekId in createDto.MuziekIDs)
+                    {
+                        if (!await _unitOfWork.StemmingMuziekRepository.IsAlreadyLinkedAsync(existing.StemmingID, muziekId))
+                        {
+                            var link = new StemmingMuziek
+                            {
+                                StemmingID = existing.StemmingID,
+                                MuziekID = muziekId
+                            };
+                            await _unitOfWork.StemmingMuziekRepository.AddAsync(link);
+                        }
+                    }
+                    await _unitOfWork.SaveChangesAsync();
+                }
+
+                // Optioneel: update beschrijving (append als er nieuwe tekst is)
+                if (!string.IsNullOrWhiteSpace(createDto.Beschrijving))
+                {
+                    if (string.IsNullOrWhiteSpace(existing.Beschrijving))
+                    {
+                        existing.Beschrijving = createDto.Beschrijving;
+                    }
+                    else if (!existing.Beschrijving.Contains(createDto.Beschrijving))
+                    {
+                        existing.Beschrijving += "\n" + createDto.Beschrijving;
+                    }
+                    await _unitOfWork.StemmingRepository.UpdateAsync(existing);
+                    await _unitOfWork.SaveChangesAsync();
+                }
+
+                var updated = await _unitOfWork.StemmingRepository.GetStemmingMetDetailsAsync(existing.StemmingID);
+                return await MapToDtoWithMuziekAsync(updated!);
+            }
+
+            // Anders: maak een nieuwe stemming zoals voorheen
             var stemming = new Stemming
             {
                 UserID = userId,

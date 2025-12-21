@@ -10,5 +10,6 @@ namespace Euphonia.DataAccessLayer.Repositories
         Task<IEnumerable<Stemming>> GetStemmingenByUserIdAsync(int userId);
         Task<IEnumerable<Stemming>> GetStemmingenByTypeIdAsync(int typeId);
         Task<Stemming?> GetStemmingMetDetailsAsync(int stemmingId);
+        Task<Stemming?> GetLatestByUserAndTypeAsync(int userId, int typeId);
     }
 }

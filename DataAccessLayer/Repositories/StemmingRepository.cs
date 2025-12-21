@@ -36,5 +36,13 @@ namespace Euphonia.DataAccessLayer.Repositories
                 .Include(s => s.StemmingType)
                 .FirstOrDefaultAsync(s => s.StemmingID == stemmingId);
         }
+
+        public async Task<Stemming?> GetLatestByUserAndTypeAsync(int userId, int typeId)
+        {
+            return await _context.Set<Stemming>()
+                .Where(s => s.UserID == userId && s.TypeID == typeId)
+                .OrderByDescending(s => s.DatumTijd)
+                .FirstOrDefaultAsync();
+        }
     }
 }
