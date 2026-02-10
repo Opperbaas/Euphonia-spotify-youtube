@@ -1,7 +1,7 @@
--- Script om de 'user' kolom in table1_user om te zetten naar IDENTITY
+﻿-- Script om de 'user' kolom in table1_user om te zetten naar IDENTITY
 -- Voer dit uit in Azure Data Studio of SQL Server Management Studio
 
-USE EuphoniaDB;
+USE ResonanceDB;
 GO
 
 -- Stap 1: Maak een nieuwe tabel met IDENTITY op de 'user' kolom
@@ -41,3 +41,4 @@ GO
 
 PRINT 'Klaar! De user kolom is nu IDENTITY en begint bij het hoogste bestaande nummer + 1';
 PRINT 'Nieuwe gebruikers krijgen automatisch een uniek user nummer.';
+

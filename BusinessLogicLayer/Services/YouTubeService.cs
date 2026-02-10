@@ -1,5 +1,5 @@
-using Euphonia.BusinessLogicLayer.DTOs;
-using Euphonia.BusinessLogicLayer.Interfaces;
+﻿using Resonance.BusinessLogicLayer.DTOs;
+using Resonance.BusinessLogicLayer.Interfaces;
 using Google.Apis.Services;
 using Google.Apis.YouTube.v3;
 using Microsoft.Extensions.Configuration;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace Euphonia.BusinessLogicLayer.Services
+namespace Resonance.BusinessLogicLayer.Services
 {
     /// <summary>
     /// Service voor YouTube Data API integratie
@@ -42,7 +42,7 @@ namespace Euphonia.BusinessLogicLayer.Services
             _youtubeApiService = new Google.Apis.YouTube.v3.YouTubeService(new BaseClientService.Initializer()
             {
                 ApiKey = _apiKey,
-                ApplicationName = "Euphonia"
+                ApplicationName = "Resonance"
             });
 
             return _youtubeApiService;
@@ -153,3 +153,4 @@ namespace Euphonia.BusinessLogicLayer.Services
         }
     }
 }
+

@@ -1,7 +1,7 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Euphonia.DataAccessLayer.Models
+namespace Resonance.DataAccessLayer.Models
 {
     /// <summary>
     /// StemmingMuziek entity - koppeltabel tussen Stemming en Muziek
@@ -28,3 +28,4 @@ namespace Euphonia.DataAccessLayer.Models
         public virtual Muziek? Muziek { get; set; }
     }
 }
+

@@ -1,9 +1,9 @@
-using Xunit;
+﻿using Xunit;
 using Microsoft.Extensions.Configuration;
-using Euphonia.BusinessLogicLayer.Services;
+using Resonance.BusinessLogicLayer.Services;
 using System.Collections.Generic;
 
-namespace Euphonia.Tests.UnitTests.Services
+namespace Resonance.Tests.UnitTests.Services
 {
     public class YouTubeServiceTests
     {
@@ -40,3 +40,4 @@ namespace Euphonia.Tests.UnitTests.Services
         }
     }
 }
+

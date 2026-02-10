@@ -1,4 +1,4 @@
--- Notificatie tabel aanmaken
+﻿-- Notificatie tabel aanmaken
 IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'notificatie')
 BEGIN
     CREATE TABLE [dbo].[notificatie] (
@@ -32,5 +32,6 @@ GO
 -- Seed enkele test notificaties (optioneel)
 -- INSERT INTO notificatie (userID, titel, bericht, type, icoon)
 -- VALUES 
--- (1, 'Welkom bij Euphonia!', 'Begin met het tracken van je stemmingen en muziek', 'Info', 'bi-info-circle'),
+-- (1, 'Welkom bij Resonance!', 'Begin met het tracken van je stemmingen en muziek', 'Info', 'bi-info-circle'),
 -- (1, 'Eerste stemming toegevoegd', 'Je hebt je eerste stemming succesvol toegevoegd!', 'Success', 'bi-check-circle');
+

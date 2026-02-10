@@ -1,5 +1,5 @@
--- Uitbreiden van notificatie tabel met extra velden
-USE EuphoniaDB;
+﻿-- Uitbreiden van notificatie tabel met extra velden
+USE ResonanceDB;
 GO
 
 -- Voeg type kolom toe
@@ -54,3 +54,4 @@ END
 
 PRINT 'Notificatie tabel succesvol uitgebreid!';
 GO
+

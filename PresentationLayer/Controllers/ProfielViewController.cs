@@ -1,9 +1,9 @@
-using Microsoft.AspNetCore.Mvc;
-using Euphonia.BusinessLogicLayer.DTOs;
-using Euphonia.BusinessLogicLayer.Interfaces;
-using Euphonia.PresentationLayer.Filters;
+﻿using Microsoft.AspNetCore.Mvc;
+using Resonance.BusinessLogicLayer.DTOs;
+using Resonance.BusinessLogicLayer.Interfaces;
+using Resonance.PresentationLayer.Filters;
 
-namespace Euphonia.PresentationLayer.Controllers
+namespace Resonance.PresentationLayer.Controllers
 {
     /// <summary>
     /// MVC Controller voor Profiel views
@@ -159,3 +159,4 @@ namespace Euphonia.PresentationLayer.Controllers
         }
     }
 }
+

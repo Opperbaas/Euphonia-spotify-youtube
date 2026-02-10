@@ -1,5 +1,5 @@
-using Euphonia.BusinessLogicLayer.DTOs;
-using Euphonia.BusinessLogicLayer.Interfaces;
+﻿using Resonance.BusinessLogicLayer.DTOs;
+using Resonance.BusinessLogicLayer.Interfaces;
 using Microsoft.Extensions.Configuration;
 using SpotifyAPI.Web;
 using System;
@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Euphonia.BusinessLogicLayer.Services
+namespace Resonance.BusinessLogicLayer.Services
 {
     /// <summary>
     /// Service voor Spotify Web API integratie
@@ -120,3 +120,4 @@ namespace Euphonia.BusinessLogicLayer.Services
         }
     }
 }
+

@@ -1,5 +1,5 @@
--- Fix script voor muziekAnalyse.analyseID IDENTITY property
-USE EuphoniaDB;
+﻿-- Fix script voor muziekAnalyse.analyseID IDENTITY property
+USE ResonanceDB;
 GO
 
 -- Verwijder oude backup als die bestaat
@@ -61,3 +61,4 @@ SELECT
 FROM INFORMATION_SCHEMA.COLUMNS
 WHERE TABLE_NAME = 'muziekAnalyse';
 GO
+

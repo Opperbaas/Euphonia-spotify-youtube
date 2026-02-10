@@ -1,7 +1,7 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 
-namespace Euphonia.BusinessLogicLayer.DTOs
+namespace Resonance.BusinessLogicLayer.DTOs
 {
     /// <summary>
     /// DTO voor Dashboard statistieken en inzichten
@@ -78,3 +78,4 @@ namespace Euphonia.BusinessLogicLayer.DTOs
         public double Percentage { get; set; }
     }
 }
+

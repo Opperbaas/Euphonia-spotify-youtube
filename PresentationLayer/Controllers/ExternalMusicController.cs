@@ -1,8 +1,8 @@
-using Euphonia.BusinessLogicLayer.Interfaces;
+﻿using Resonance.BusinessLogicLayer.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
-namespace Euphonia.PresentationLayer.Controllers
+namespace Resonance.PresentationLayer.Controllers
 {
     /// <summary>
     /// API Controller voor externe muziek bronnen (Spotify & YouTube)
@@ -102,3 +102,4 @@ namespace Euphonia.PresentationLayer.Controllers
         }
     }
 }
+

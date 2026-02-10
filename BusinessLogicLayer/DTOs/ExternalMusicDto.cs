@@ -1,4 +1,4 @@
-namespace Euphonia.BusinessLogicLayer.DTOs
+﻿namespace Resonance.BusinessLogicLayer.DTOs
 {
     /// <summary>
     /// DTO voor externe muziek zoekresultaten (Spotify/YouTube)
@@ -33,3 +33,4 @@ namespace Euphonia.BusinessLogicLayer.DTOs
         public string Url { get; set; } = string.Empty;
     }
 }
+

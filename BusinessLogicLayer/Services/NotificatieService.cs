@@ -1,13 +1,13 @@
-using Euphonia.BusinessLogicLayer.DTOs;
-using Euphonia.BusinessLogicLayer.Interfaces;
-using Euphonia.DataAccessLayer.Interfaces;
-using Euphonia.DataAccessLayer.Models;
+﻿using Resonance.BusinessLogicLayer.DTOs;
+using Resonance.BusinessLogicLayer.Interfaces;
+using Resonance.DataAccessLayer.Interfaces;
+using Resonance.DataAccessLayer.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Euphonia.BusinessLogicLayer.Services
+namespace Resonance.BusinessLogicLayer.Services
 {
     /// <summary>
     /// Service voor notificatiebeheer
@@ -128,7 +128,7 @@ namespace Euphonia.BusinessLogicLayer.Services
             await CreateNotificatieAsync(new CreateNotificatieDto
             {
                 UserID = userId,
-                Tekst = "Welkom bij Euphonia! Begin met het tracken van je stemmingen en ontdek patronen in je muziek.",
+                Tekst = "Welkom bij Resonance! Begin met het tracken van je stemmingen en ontdek patronen in je muziek.",
                 Type = "Info",
                 Icoon = "bi-star",
                 Link = "/Dashboard"
@@ -194,3 +194,4 @@ namespace Euphonia.BusinessLogicLayer.Services
         }
     }
 }
+

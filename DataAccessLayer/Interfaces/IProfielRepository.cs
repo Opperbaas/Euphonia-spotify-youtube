@@ -1,6 +1,6 @@
-using Euphonia.DataAccessLayer.Models;
+﻿using Resonance.DataAccessLayer.Models;
 
-namespace Euphonia.DataAccessLayer.Interfaces
+namespace Resonance.DataAccessLayer.Interfaces
 {
     /// <summary>
     /// Repository interface voor Profiel
@@ -13,3 +13,4 @@ namespace Euphonia.DataAccessLayer.Interfaces
         Task<IEnumerable<Profiel>> GetByGenreAsync(string genre);
     }
 }
+

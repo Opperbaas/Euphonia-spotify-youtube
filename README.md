@@ -1,11 +1,11 @@
-# Euphonia - Three-Tier Architecture Template
+﻿# Resonance - Three-Tier Architecture Template
 
 Een complete C# three-tier architecture template met Entity Framework Core.
 
 ## 📁 Projectstructuur
 
 ```
-Euphonia/
+Resonance/
 │
 ├── DataAccessLayer/                    # Data Access Layer (DAL)
 │   ├── Context/
@@ -259,7 +259,7 @@ Gebruik Moq voor het mocken van interfaces in unit tests.
 ## 💡 Tips
 
 - Vervang "Specific" overal door je eigen entity naam
-- Pas namespace "Euphonia" aan naar je project naam
+- Pas namespace "Resonance" aan naar je project naam
 - Voeg validatie attributen toe aan DTOs ([Required], [MaxLength], etc.)
 - Gebruik betekenisvolle namen voor je entities en services
 - Documenteer je code met XML comments voor IntelliSense
@@ -267,3 +267,4 @@ Gebruik Moq voor het mocken van interfaces in unit tests.
 ---
 
 **Happy Coding! 🎵**
+

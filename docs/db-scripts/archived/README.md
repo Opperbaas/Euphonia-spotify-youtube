@@ -1,4 +1,4 @@
-Deze map bevat legacy SQL-scripts die zijn gearchiveerd uit de hoofdrepository.
+﻿Deze map bevat legacy SQL-scripts die zijn gearchiveerd uit de hoofdrepository.
 
 Reden:
 - Scripts waren achtergrond fixes/migraties of eenmalige correcties en mogen niet meer in de actieve codebase zichtbaar zijn.
@@ -27,3 +27,4 @@ Wij verplaatten op 2025-12-21 (branch: gebruikersvriendelijkheid, commit: d7b540
 - migration_script.sql
 
 Als je wilt dat ik dit archiveer of herstel in een andere vorm (bijv. in een `archive`-branch of extern), laat het weten.
+

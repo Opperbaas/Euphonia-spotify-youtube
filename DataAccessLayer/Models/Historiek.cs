@@ -1,8 +1,8 @@
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Euphonia.DataAccessLayer.Models
+namespace Resonance.DataAccessLayer.Models
 {
     /// <summary>
     /// Historiek entity - gebruiksgeschiedenis met periode
@@ -24,3 +24,4 @@ namespace Euphonia.DataAccessLayer.Models
         public DateTime? PeriodeEinde { get; set; }
     }
 }
+

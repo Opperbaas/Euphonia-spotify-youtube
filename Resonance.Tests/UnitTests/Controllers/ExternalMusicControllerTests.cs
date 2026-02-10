@@ -1,12 +1,12 @@
-using Xunit;
+﻿using Xunit;
 using Moq;
 using Microsoft.AspNetCore.Mvc;
-using Euphonia.PresentationLayer.Controllers;
-using Euphonia.BusinessLogicLayer.Interfaces;
-using Euphonia.BusinessLogicLayer.DTOs;
+using Resonance.PresentationLayer.Controllers;
+using Resonance.BusinessLogicLayer.Interfaces;
+using Resonance.BusinessLogicLayer.DTOs;
 using System.Threading.Tasks;
 
-namespace Euphonia.Tests.UnitTests.Controllers
+namespace Resonance.Tests.UnitTests.Controllers
 {
     public class ExternalMusicControllerTests
     {
@@ -50,3 +50,4 @@ namespace Euphonia.Tests.UnitTests.Controllers
         }
     }
 }
+

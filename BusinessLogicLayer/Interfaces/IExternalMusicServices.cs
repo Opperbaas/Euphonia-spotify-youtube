@@ -1,8 +1,8 @@
-using Euphonia.BusinessLogicLayer.DTOs;
+﻿using Resonance.BusinessLogicLayer.DTOs;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Euphonia.BusinessLogicLayer.Interfaces
+namespace Resonance.BusinessLogicLayer.Interfaces
 {
     /// <summary>
     /// Interface voor Spotify Web API integratie
@@ -32,3 +32,4 @@ namespace Euphonia.BusinessLogicLayer.Interfaces
         string? ExtractVideoId(string videoUrl);
     }
 }
+

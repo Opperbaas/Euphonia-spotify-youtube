@@ -1,7 +1,7 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Euphonia.DataAccessLayer.Interfaces
+namespace Resonance.DataAccessLayer.Interfaces
 {
     /// <summary>
     /// Generic repository interface voor CRUD operaties
@@ -32,3 +32,4 @@ namespace Euphonia.DataAccessLayer.Interfaces
         Task<bool> ExistsAsync(int id);
     }
 }
+

@@ -1,9 +1,9 @@
-using Microsoft.EntityFrameworkCore;
-using Euphonia.DataAccessLayer.Context;
-using Euphonia.DataAccessLayer.Interfaces;
-using Euphonia.DataAccessLayer.UnitOfWork;
-using Euphonia.BusinessLogicLayer.Interfaces;
-using Euphonia.BusinessLogicLayer.Services;
+﻿using Microsoft.EntityFrameworkCore;
+using Resonance.DataAccessLayer.Context;
+using Resonance.DataAccessLayer.Interfaces;
+using Resonance.DataAccessLayer.UnitOfWork;
+using Resonance.BusinessLogicLayer.Interfaces;
+using Resonance.BusinessLogicLayer.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,7 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(
         builder.Configuration.GetConnectionString("DefaultConnection"),
-        b => b.MigrationsAssembly("Euphonia.DataAccessLayer")
+        b => b.MigrationsAssembly("Resonance.DataAccessLayer")
     )
 );
 
@@ -80,3 +80,4 @@ app.MapControllerRoute(
 app.MapControllers(); // API routes
 
 app.Run();
+

@@ -1,9 +1,9 @@
-using Euphonia.DataAccessLayer.Context;
-using Euphonia.DataAccessLayer.Interfaces;
-using Euphonia.DataAccessLayer.Models;
+﻿using Resonance.DataAccessLayer.Context;
+using Resonance.DataAccessLayer.Interfaces;
+using Resonance.DataAccessLayer.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Euphonia.DataAccessLayer.Repositories
+namespace Resonance.DataAccessLayer.Repositories
 {
     /// <summary>
     /// Repository voor Notificatie operaties
@@ -95,3 +95,4 @@ namespace Euphonia.DataAccessLayer.Repositories
         }
     }
 }
+

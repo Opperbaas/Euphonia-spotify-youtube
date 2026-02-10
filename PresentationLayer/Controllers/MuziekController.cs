@@ -1,11 +1,11 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Euphonia.BusinessLogicLayer.DTOs;
-using Euphonia.BusinessLogicLayer.Interfaces;
+using Resonance.BusinessLogicLayer.DTOs;
+using Resonance.BusinessLogicLayer.Interfaces;
 
-namespace Euphonia.PresentationLayer.Controllers
+namespace Resonance.PresentationLayer.Controllers
 {
     /// <summary>
     /// Controller voor Muziek API endpoints
@@ -183,3 +183,4 @@ namespace Euphonia.PresentationLayer.Controllers
         }
     }
 }
+

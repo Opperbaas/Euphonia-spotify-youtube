@@ -1,6 +1,6 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Euphonia.PresentationLayer.Controllers
+namespace Resonance.PresentationLayer.Controllers
 {
     /// <summary>
     /// Home Controller voor de hoofdpagina
@@ -30,3 +30,4 @@ namespace Euphonia.PresentationLayer.Controllers
         }
     }
 }
+

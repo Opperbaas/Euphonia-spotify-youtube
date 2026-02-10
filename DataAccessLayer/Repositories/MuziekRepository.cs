@@ -1,12 +1,12 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Euphonia.DataAccessLayer.Context;
-using Euphonia.DataAccessLayer.Interfaces;
-using Euphonia.DataAccessLayer.Models;
+using Resonance.DataAccessLayer.Context;
+using Resonance.DataAccessLayer.Interfaces;
+using Resonance.DataAccessLayer.Models;
 
-namespace Euphonia.DataAccessLayer.Repositories
+namespace Resonance.DataAccessLayer.Repositories
 {
     /// <summary>
     /// Repository implementatie voor Muziek
@@ -51,3 +51,4 @@ namespace Euphonia.DataAccessLayer.Repositories
         }
     }
 }
+

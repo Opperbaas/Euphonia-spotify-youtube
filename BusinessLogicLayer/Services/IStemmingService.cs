@@ -1,8 +1,8 @@
-using Euphonia.BusinessLogicLayer.DTOs;
+﻿using Resonance.BusinessLogicLayer.DTOs;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Euphonia.BusinessLogicLayer.Services
+namespace Resonance.BusinessLogicLayer.Services
 {
     public interface IStemmingService
     {
@@ -20,3 +20,4 @@ namespace Euphonia.BusinessLogicLayer.Services
         Task<IEnumerable<MuziekDto>> GetMuziekByStemmingIdAsync(int stemmingId);
     }
 }
+

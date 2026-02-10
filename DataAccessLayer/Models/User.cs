@@ -1,7 +1,7 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Euphonia.DataAccessLayer.Models
+namespace Resonance.DataAccessLayer.Models
 {
     /// <summary>
     /// User entity - gebruikersaccount voor authenticatie
@@ -36,3 +36,4 @@ namespace Euphonia.DataAccessLayer.Models
         public DateTime? LaatstIngelogd { get; set; }
     }
 }
+

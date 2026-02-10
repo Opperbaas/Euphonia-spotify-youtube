@@ -1,4 +1,4 @@
-TABLE_NAME,COLUMN_NAME,DATA_TYPE,IS_NULLABLE,CHARACTER_MAXIMUM_LENGTH
+﻿TABLE_NAME,COLUMN_NAME,DATA_TYPE,IS_NULLABLE,CHARACTER_MAXIMUM_LENGTH
 ----------,-----------,---------,-----------,------------------------
 historiek,historiekID,int,NO,NULL
 historiek,userID,int,YES,NULL
@@ -41,3 +41,4 @@ stemmingType,emoji,nvarchar,YES,255
 stemmingType,waarde,int,YES,NULL
 
 (39 rows affected)
+

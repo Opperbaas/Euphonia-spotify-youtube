@@ -1,10 +1,10 @@
-using Xunit;
+﻿using Xunit;
 using Microsoft.EntityFrameworkCore;
-using Euphonia.DataAccessLayer.Context;
-using Euphonia.DataAccessLayer.Repositories;
-using Euphonia.DataAccessLayer.Models;
+using Resonance.DataAccessLayer.Context;
+using Resonance.DataAccessLayer.Repositories;
+using Resonance.DataAccessLayer.Models;
 
-namespace Euphonia.Tests.UnitTests.Repositories
+namespace Resonance.Tests.UnitTests.Repositories
 {
     /// <summary>
     /// onthoud: deze tests gebruiken een in-memory database voor isolatie en snelheid
@@ -361,3 +361,4 @@ namespace Euphonia.Tests.UnitTests.Repositories
         #endregion
     }
 }
+

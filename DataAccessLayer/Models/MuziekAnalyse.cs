@@ -1,7 +1,7 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Euphonia.DataAccessLayer.Models
+namespace Resonance.DataAccessLayer.Models
 {
     /// <summary>
     /// MuziekAnalyse entity - analyse gegevens van muziek
@@ -40,3 +40,4 @@ namespace Euphonia.DataAccessLayer.Models
         public virtual Muziek? Muziek { get; set; }
     }
 }
+

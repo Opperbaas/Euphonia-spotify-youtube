@@ -1,7 +1,7 @@
--- Voeg test notificaties toe voor gebruiker met ID 0
+﻿-- Voeg test notificaties toe voor gebruiker met ID 0
 -- Pas het userID aan naar jouw gebruiker ID
 
-USE EuphoniaDB;
+USE ResonanceDB;
 GO
 
 -- Controleer of er gebruikers zijn
@@ -10,7 +10,7 @@ BEGIN
     -- Welkomst notificatie
     INSERT INTO notificatie (userID, tekst, type, icoon, isGelezen, datum_tijd, link)
     VALUES 
-    (0, 'Welkom bij Euphonia! Begin met het tracken van je stemmingen en ontdek patronen in je muziek.', 'Info', 'bi-star', 0, GETDATE(), '/Dashboard');
+    (0, 'Welkom bij Resonance! Begin met het tracken van je stemmingen en ontdek patronen in je muziek.', 'Info', 'bi-star', 0, GETDATE(), '/Dashboard');
 
     -- Stemming toegevoegd notificatie
     INSERT INTO notificatie (userID, tekst, type, icoon, isGelezen, datum_tijd, link)
@@ -39,3 +39,4 @@ BEGIN
     PRINT 'Geen gebruiker gevonden met ID 0. Pas het script aan naar jouw gebruiker ID.';
 END
 GO
+

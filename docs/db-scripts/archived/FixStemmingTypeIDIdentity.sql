@@ -1,5 +1,5 @@
--- Fix script voor stemmingType.typeID IDENTITY property
-USE EuphoniaDB;
+﻿-- Fix script voor stemmingType.typeID IDENTITY property
+USE ResonanceDB;
 GO
 
 -- Verwijder oude backup als die bestaat
@@ -57,3 +57,4 @@ SELECT
 FROM INFORMATION_SCHEMA.COLUMNS
 WHERE TABLE_NAME = 'stemmingType';
 GO
+

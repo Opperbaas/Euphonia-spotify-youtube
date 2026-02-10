@@ -1,12 +1,12 @@
-using Xunit;
+﻿using Xunit;
 using Moq;
-using Euphonia.BusinessLogicLayer.Services;
-using Euphonia.DataAccessLayer.Interfaces;
-using Euphonia.BusinessLogicLayer.DTOs;
-using Euphonia.DataAccessLayer.Models;
+using Resonance.BusinessLogicLayer.Services;
+using Resonance.DataAccessLayer.Interfaces;
+using Resonance.BusinessLogicLayer.DTOs;
+using Resonance.DataAccessLayer.Models;
 using System.Threading.Tasks;
 
-namespace Euphonia.Tests.UnitTests.Services
+namespace Resonance.Tests.UnitTests.Services
 {
     public class MuziekServiceTests
     {
@@ -76,3 +76,4 @@ namespace Euphonia.Tests.UnitTests.Services
         }
     }
 }
+

@@ -1,11 +1,11 @@
-using Euphonia.DataAccessLayer.Context;
-using Euphonia.DataAccessLayer.Models;
+﻿using Resonance.DataAccessLayer.Context;
+using Resonance.DataAccessLayer.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Euphonia.DataAccessLayer.Repositories
+namespace Resonance.DataAccessLayer.Repositories
 {
     public class StemmingRepository : Repository<Stemming>, IStemmingRepository
     {
@@ -46,3 +46,4 @@ namespace Euphonia.DataAccessLayer.Repositories
         }
     }
 }
+

@@ -1,5 +1,5 @@
--- Fix script voor historiek.historiekID IDENTITY property
-USE EuphoniaDB;
+﻿-- Fix script voor historiek.historiekID IDENTITY property
+USE ResonanceDB;
 GO
 
 -- Verwijder oude backup als die bestaat
@@ -58,3 +58,4 @@ SELECT
 FROM INFORMATION_SCHEMA.COLUMNS
 WHERE TABLE_NAME = 'historiek';
 GO
+

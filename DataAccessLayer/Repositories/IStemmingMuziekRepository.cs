@@ -1,9 +1,9 @@
-using Euphonia.DataAccessLayer.Models;
-using Euphonia.DataAccessLayer.Interfaces;
+﻿using Resonance.DataAccessLayer.Models;
+using Resonance.DataAccessLayer.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Euphonia.DataAccessLayer.Repositories
+namespace Resonance.DataAccessLayer.Repositories
 {
     public interface IStemmingMuziekRepository : IRepository<StemmingMuziek>
     {
@@ -13,3 +13,4 @@ namespace Euphonia.DataAccessLayer.Repositories
         Task DeleteByStemmingIdAsync(int stemmingId);
     }
 }
+

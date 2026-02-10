@@ -1,8 +1,8 @@
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Euphonia.DataAccessLayer.Models
+namespace Resonance.DataAccessLayer.Models
 {
     /// <summary>
     /// Stemming entity - gebruikersstemming op een moment
@@ -34,3 +34,4 @@ namespace Euphonia.DataAccessLayer.Models
         public virtual ICollection<StemmingMuziek> StemmingMuzieks { get; set; } = new List<StemmingMuziek>();
     }
 }
+

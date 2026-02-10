@@ -1,14 +1,14 @@
-using Xunit;
+﻿using Xunit;
 using Moq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using Euphonia.PresentationLayer.Controllers;
-using Euphonia.BusinessLogicLayer.Interfaces;
-using Euphonia.BusinessLogicLayer.DTOs;
-using Euphonia.Tests.TestHelpers;
+using Resonance.PresentationLayer.Controllers;
+using Resonance.BusinessLogicLayer.Interfaces;
+using Resonance.BusinessLogicLayer.DTOs;
+using Resonance.Tests.TestHelpers;
 
-namespace Euphonia.Tests.UnitTests.Controllers
+namespace Resonance.Tests.UnitTests.Controllers
 {
     
     public class ProfielViewControllerTests
@@ -381,3 +381,4 @@ namespace Euphonia.Tests.UnitTests.Controllers
         #endregion
     }
 }
+

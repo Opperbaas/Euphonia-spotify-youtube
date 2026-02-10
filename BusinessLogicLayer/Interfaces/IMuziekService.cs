@@ -1,8 +1,8 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Euphonia.BusinessLogicLayer.DTOs;
+using Resonance.BusinessLogicLayer.DTOs;
 
-namespace Euphonia.BusinessLogicLayer.Interfaces
+namespace Resonance.BusinessLogicLayer.Interfaces
 {
     /// <summary>
     /// Service interface voor Muziek business logic
@@ -23,3 +23,4 @@ namespace Euphonia.BusinessLogicLayer.Interfaces
         Task<IEnumerable<MuziekDto>> GetByTitelAsync(string titel);
     }
 }
+

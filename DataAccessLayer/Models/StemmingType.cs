@@ -1,7 +1,7 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Euphonia.DataAccessLayer.Models
+namespace Resonance.DataAccessLayer.Models
 {
     /// <summary>
     /// StemmingType entity - types van stemmingen (bv. blij, verdrietig, etc.)
@@ -25,3 +25,4 @@ namespace Euphonia.DataAccessLayer.Models
         public virtual ICollection<Stemming> Stemmingen { get; set; } = new List<Stemming>();
     }
 }
+

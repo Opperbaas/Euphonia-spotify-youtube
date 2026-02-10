@@ -1,5 +1,5 @@
--- Seed data voor stemmingType tabel
-USE EuphoniaDB;
+﻿-- Seed data voor stemmingType tabel
+USE ResonanceDB;
 GO
 
 -- Check of er al data is
@@ -32,3 +32,4 @@ GO
 -- Verificatie
 SELECT * FROM stemmingType ORDER BY typeID;
 GO
+

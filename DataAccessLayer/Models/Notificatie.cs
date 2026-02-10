@@ -1,8 +1,8 @@
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Euphonia.DataAccessLayer.Models
+namespace Resonance.DataAccessLayer.Models
 {
     /// <summary>
     /// Notificatie entity - gebruikersnotificaties
@@ -44,3 +44,4 @@ namespace Euphonia.DataAccessLayer.Models
         public virtual User? User { get; set; }
     }
 }
+

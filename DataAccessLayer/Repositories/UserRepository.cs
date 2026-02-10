@@ -1,9 +1,9 @@
-using Microsoft.EntityFrameworkCore;
-using Euphonia.DataAccessLayer.Context;
-using Euphonia.DataAccessLayer.Interfaces;
-using Euphonia.DataAccessLayer.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using Resonance.DataAccessLayer.Context;
+using Resonance.DataAccessLayer.Interfaces;
+using Resonance.DataAccessLayer.Models;
 
-namespace Euphonia.DataAccessLayer.Repositories
+namespace Resonance.DataAccessLayer.Repositories
 {
     /// <summary>
     /// Repository voor User data access
@@ -27,3 +27,4 @@ namespace Euphonia.DataAccessLayer.Repositories
         }
     }
 }
+

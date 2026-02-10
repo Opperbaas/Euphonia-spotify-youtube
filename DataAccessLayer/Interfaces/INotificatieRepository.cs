@@ -1,6 +1,6 @@
-using Euphonia.DataAccessLayer.Models;
+﻿using Resonance.DataAccessLayer.Models;
 
-namespace Euphonia.DataAccessLayer.Interfaces
+namespace Resonance.DataAccessLayer.Interfaces
 {
     /// <summary>
     /// Interface voor Notificatie repository
@@ -38,3 +38,4 @@ namespace Euphonia.DataAccessLayer.Interfaces
         Task VerwijderOudeGelezenNotificatiesAsync(int dagen = 30);
     }
 }
+

@@ -1,8 +1,8 @@
-using Microsoft.AspNetCore.Mvc;
-using Euphonia.BusinessLogicLayer.DTOs;
-using Euphonia.BusinessLogicLayer.Interfaces;
+﻿using Microsoft.AspNetCore.Mvc;
+using Resonance.BusinessLogicLayer.DTOs;
+using Resonance.BusinessLogicLayer.Interfaces;
 
-namespace Euphonia.PresentationLayer.Controllers
+namespace Resonance.PresentationLayer.Controllers
 {
     /// <summary>
     /// Controller voor authenticatie (Login/Register)
@@ -95,3 +95,4 @@ namespace Euphonia.PresentationLayer.Controllers
         }
     }
 }
+

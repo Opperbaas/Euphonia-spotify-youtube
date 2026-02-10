@@ -1,4 +1,4 @@
-# 🎯 Quick Start Instructies
+﻿# 🎯 Quick Start Instructies
 
 ## Stap-voor-stap: Van Template naar Werkende Applicatie
 
@@ -17,7 +17,7 @@
 Zoek en vervang de volgende placeholder namen door je eigen namen:
 
 ### Te vervangen:
-- `Euphonia` → Jouw project naam
+- `Resonance` → Jouw project naam
 - `SpecificEntity` → Jouw entity naam (bijv. `Product`, `User`, `Order`)
 - `SpecificRepository` → Jouw repository naam (bijv. `ProductRepository`)
 - `SpecificService` → Jouw service naam (bijv. `ProductService`)
@@ -144,7 +144,7 @@ private void ConfigureProduct(ModelBuilder modelBuilder)  // Herneem method
 
 ```powershell
 # Navigeer naar de root van je project
-cd c:\Users\Jamal\Documents\GitHub\Euphonia
+cd c:\Users\Jamal\Documents\GitHub\Resonance
 
 # Maak eerste migration
 dotnet ef migrations add InitialCreate --project DataAccessLayer --startup-project PresentationLayer
@@ -333,3 +333,4 @@ dotnet ef database drop --project DataAccessLayer --startup-project Presentation
 ---
 
 **Succes met je project! 🚀**
+

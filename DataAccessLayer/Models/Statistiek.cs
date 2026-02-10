@@ -1,7 +1,7 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Euphonia.DataAccessLayer.Models
+namespace Resonance.DataAccessLayer.Models
 {
     /// <summary>
     /// Statistiek entity - gebruikersstatistieken en trends
@@ -25,3 +25,4 @@ namespace Euphonia.DataAccessLayer.Models
         public string? Resultaat { get; set; }
     }
 }
+

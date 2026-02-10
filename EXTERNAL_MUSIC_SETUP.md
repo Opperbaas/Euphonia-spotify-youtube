@@ -1,4 +1,4 @@
-# Euphonia - Externe Muziek Integratie Setup
+﻿# Resonance - Externe Muziek Integratie Setup
 
 ## 🎵 Spotify API Setup
 
@@ -9,7 +9,7 @@
 ### Stap 2: Maak een App aan
 1. Klik op "Create app"
 2. Vul in:
-   - **App name**: `Euphonia` (of een naam naar keuze)
+   - **App name**: `Resonance` (of een naam naar keuze)
    - **App description**: `Music mood tracking application`
    - **Redirect URIs**: `http://localhost:5000/callback` (niet strikt nodig voor onze use case, maar verplicht veld)
    - **Which API/SDKs are you planning to use?**: Selecteer "Web API"
@@ -39,7 +39,7 @@ Open `PresentationLayer/appsettings.json` en vervang:
 1. Ga naar [Google Cloud Console](https://console.cloud.google.com)
 2. Log in met je Google account
 3. Klik op "Select a project" → "New Project"
-4. Geef je project een naam (bijv. `Euphonia`) en klik op "Create"
+4. Geef je project een naam (bijv. `Resonance`) en klik op "Create"
 
 ### Stap 2: Activeer de YouTube Data API v3
 1. Zorg dat je nieuwe project geselecteerd is
@@ -136,4 +136,5 @@ Nu de basis staat, kun je overwegen om:
 3. **Error logging** te verbeteren met Serilog of Application Insights
 4. **Preview playback** te implementeren met Spotify's audio previews
 
-Veel plezier met Euphonia! 🎵
+Veel plezier met Resonance! 🎵
+

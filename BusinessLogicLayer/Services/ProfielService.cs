@@ -1,9 +1,9 @@
-using Euphonia.BusinessLogicLayer.DTOs;
-using Euphonia.BusinessLogicLayer.Interfaces;
-using Euphonia.DataAccessLayer.Interfaces;
-using Euphonia.DataAccessLayer.Models;
+﻿using Resonance.BusinessLogicLayer.DTOs;
+using Resonance.BusinessLogicLayer.Interfaces;
+using Resonance.DataAccessLayer.Interfaces;
+using Resonance.DataAccessLayer.Models;
 
-namespace Euphonia.BusinessLogicLayer.Services
+namespace Resonance.BusinessLogicLayer.Services
 {
     /// <summary>
     /// Service voor Profiel business logic
@@ -142,3 +142,4 @@ namespace Euphonia.BusinessLogicLayer.Services
         }
     }
 }
+

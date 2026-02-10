@@ -1,4 +1,4 @@
-@model Euphonia.BusinessLogicLayer.DTOs.CreateStemmingDto
+﻿@model Resonance.BusinessLogicLayer.DTOs.CreateStemmingDto
 
 @{
     ViewData["Title"] = "Nieuwe Stemming";
@@ -36,14 +36,14 @@
                             <span asp-validation-for="Beschrijving" class="text-danger"></span>
                         </div>
 
-                        @if (ViewBag.AlleMuziek != null && ((List<Euphonia.BusinessLogicLayer.DTOs.MuziekDto>)ViewBag.AlleMuziek).Any())
+                        @if (ViewBag.AlleMuziek != null && ((List<Resonance.BusinessLogicLayer.DTOs.MuziekDto>)ViewBag.AlleMuziek).Any())
                         {
                             <div class="mb-3">
                                 <label class="form-label">
                                     <i class="bi bi-music-note-list"></i> Muziek (optioneel)
                                 </label>
                                 <div class="border rounded p-3" style="max-height: 300px; overflow-y: auto;">
-                                    @foreach (var muziek in (List<Euphonia.BusinessLogicLayer.DTOs.MuziekDto>)ViewBag.AlleMuziek)
+                                    @foreach (var muziek in (List<Resonance.BusinessLogicLayer.DTOs.MuziekDto>)ViewBag.AlleMuziek)
                                     {
                                         <div class="form-check mb-2">
                                             <input class="form-check-input" type="checkbox" 
@@ -80,3 +80,4 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+

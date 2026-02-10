@@ -1,6 +1,6 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace Euphonia.BusinessLogicLayer.DTOs
+namespace Resonance.BusinessLogicLayer.DTOs
 {
     /// <summary>
     /// DTO voor gebruikersregistratie
@@ -46,3 +46,4 @@ namespace Euphonia.BusinessLogicLayer.DTOs
         public decimal? Rol { get; set; }
     }
 }
+

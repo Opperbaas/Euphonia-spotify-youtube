@@ -1,11 +1,11 @@
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Storage;
-using Euphonia.DataAccessLayer.Context;
-using Euphonia.DataAccessLayer.Interfaces;
-using Euphonia.DataAccessLayer.Repositories;
+using Resonance.DataAccessLayer.Context;
+using Resonance.DataAccessLayer.Interfaces;
+using Resonance.DataAccessLayer.Repositories;
 
-namespace Euphonia.DataAccessLayer.UnitOfWork
+namespace Resonance.DataAccessLayer.UnitOfWork
 {
     /// <summary>
     /// Unit of Work implementatie voor transactiebeheer
@@ -167,3 +167,4 @@ namespace Euphonia.DataAccessLayer.UnitOfWork
         }
     }
 }
+

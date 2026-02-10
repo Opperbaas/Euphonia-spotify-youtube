@@ -1,7 +1,7 @@
-using Euphonia.BusinessLogicLayer.DTOs;
+﻿using Resonance.BusinessLogicLayer.DTOs;
 using System.Threading.Tasks;
 
-namespace Euphonia.BusinessLogicLayer.Interfaces
+namespace Resonance.BusinessLogicLayer.Interfaces
 {
     /// <summary>
     /// Service interface voor Dashboard statistieken en inzichten
@@ -14,3 +14,4 @@ namespace Euphonia.BusinessLogicLayer.Interfaces
         Task<DashboardDto> GetDashboardDataAsync(int userId);
     }
 }
+

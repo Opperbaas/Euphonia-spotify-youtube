@@ -1,4 +1,4 @@
-namespace Euphonia.BusinessLogicLayer.DTOs
+﻿namespace Resonance.BusinessLogicLayer.DTOs
 {
     /// <summary>
     /// DTO voor het lezen van Profiel data
@@ -35,3 +35,4 @@ namespace Euphonia.BusinessLogicLayer.DTOs
         public bool IsActive { get; set; }
     }
 }
+

@@ -1,7 +1,7 @@
-using Euphonia.BusinessLogicLayer.DTOs;
-using Euphonia.BusinessLogicLayer.Services;
-using Euphonia.BusinessLogicLayer.Interfaces;
-using Euphonia.PresentationLayer.Filters;
+﻿using Resonance.BusinessLogicLayer.DTOs;
+using Resonance.BusinessLogicLayer.Services;
+using Resonance.BusinessLogicLayer.Interfaces;
+using Resonance.PresentationLayer.Filters;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Threading.Tasks;
@@ -220,3 +220,4 @@ namespace PresentationLayer.Controllers
         }
     }
 }
+

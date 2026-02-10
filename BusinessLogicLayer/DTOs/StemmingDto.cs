@@ -1,8 +1,8 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Euphonia.BusinessLogicLayer.DTOs
+namespace Resonance.BusinessLogicLayer.DTOs
 {
     public class StemmingDto
     {
@@ -55,3 +55,4 @@ namespace Euphonia.BusinessLogicLayer.DTOs
         public int MuziekID { get; set; }
     }
 }
+

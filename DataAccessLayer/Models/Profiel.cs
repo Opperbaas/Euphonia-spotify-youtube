@@ -1,7 +1,7 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Euphonia.DataAccessLayer.Models
+namespace Resonance.DataAccessLayer.Models
 {
     /// <summary>
     /// Profiel entity - gebruikersprofiel met voorkeuren
@@ -29,3 +29,4 @@ namespace Euphonia.DataAccessLayer.Models
         public bool IsActive { get; set; } = false;
     }
 }
+

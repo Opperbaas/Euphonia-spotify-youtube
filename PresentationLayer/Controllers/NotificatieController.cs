@@ -1,10 +1,10 @@
-using Euphonia.BusinessLogicLayer.DTOs;
-using Euphonia.BusinessLogicLayer.Interfaces;
-using Euphonia.PresentationLayer.Filters;
+﻿using Resonance.BusinessLogicLayer.DTOs;
+using Resonance.BusinessLogicLayer.Interfaces;
+using Resonance.PresentationLayer.Filters;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
-namespace Euphonia.PresentationLayer.Controllers
+namespace Resonance.PresentationLayer.Controllers
 {
     /// <summary>
     /// Controller voor notificatiebeheer
@@ -92,3 +92,4 @@ namespace Euphonia.PresentationLayer.Controllers
         }
     }
 }
+

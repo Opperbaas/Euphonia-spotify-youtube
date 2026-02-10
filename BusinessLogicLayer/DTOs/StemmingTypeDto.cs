@@ -1,6 +1,6 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace Euphonia.BusinessLogicLayer.DTOs
+namespace Resonance.BusinessLogicLayer.DTOs
 {
     public class StemmingTypeDto
     {
@@ -14,3 +14,4 @@ namespace Euphonia.BusinessLogicLayer.DTOs
         public string? Beschrijving { get; set; }
     }
 }
+

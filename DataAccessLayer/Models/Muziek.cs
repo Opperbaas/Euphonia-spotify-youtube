@@ -1,7 +1,7 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Euphonia.DataAccessLayer.Models
+namespace Resonance.DataAccessLayer.Models
 {
     /// <summary>
     /// Muziek entity - representeert een muzieknummer
@@ -43,3 +43,4 @@ namespace Euphonia.DataAccessLayer.Models
         public virtual ICollection<StemmingMuziek> StemmingMuzieks { get; set; } = new List<StemmingMuziek>();
     }
 }
+

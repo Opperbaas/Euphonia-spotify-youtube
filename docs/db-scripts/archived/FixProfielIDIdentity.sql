@@ -1,7 +1,7 @@
--- Script om profielID kolom te veranderen naar IDENTITY
--- Database: EuphoniaDB
+﻿-- Script om profielID kolom te veranderen naar IDENTITY
+-- Database: ResonanceDB
 
-USE EuphoniaDB;
+USE ResonanceDB;
 GO
 
 -- Stap 1: Maak een nieuwe tabel met IDENTITY
@@ -44,3 +44,4 @@ WHERE TABLE_NAME = 'profiel';
 GO
 
 PRINT 'Klaar! profielID is nu een IDENTITY kolom.';
+

@@ -1,6 +1,6 @@
-using System;
+﻿using System;
 
-namespace Euphonia.BusinessLogicLayer.DTOs
+namespace Resonance.BusinessLogicLayer.DTOs
 {
     /// <summary>
     /// DTO voor het ophalen van notificaties
@@ -76,3 +76,4 @@ namespace Euphonia.BusinessLogicLayer.DTOs
         public System.Collections.Generic.List<NotificatieDto> RecenteNotificaties { get; set; } = new();
     }
 }
+

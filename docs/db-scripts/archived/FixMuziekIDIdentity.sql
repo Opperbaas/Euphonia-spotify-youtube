@@ -1,8 +1,8 @@
--- Script om muziekID kolom te veranderen naar IDENTITY
+﻿-- Script om muziekID kolom te veranderen naar IDENTITY
 -- Voer dit uit in SQL Server Management Studio of Azure Data Studio
--- Database: EuphoniaDB
+-- Database: ResonanceDB
 
-USE EuphoniaDB;
+USE ResonanceDB;
 GO
 
 -- Verwijder oude backup als die bestaat
@@ -63,3 +63,4 @@ SELECT
 FROM INFORMATION_SCHEMA.COLUMNS
 WHERE TABLE_NAME = 'muziek';
 GO
+

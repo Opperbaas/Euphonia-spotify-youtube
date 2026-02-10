@@ -1,7 +1,7 @@
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 
-namespace Euphonia.Tests.TestHelpers
+namespace Resonance.Tests.TestHelpers
 {
     /// <summary>
     /// Fake implementation van ISession voor tests
@@ -36,3 +36,4 @@ namespace Euphonia.Tests.TestHelpers
         }
     }
 }
+

@@ -1,6 +1,6 @@
-using Euphonia.BusinessLogicLayer.DTOs;
+﻿using Resonance.BusinessLogicLayer.DTOs;
 
-namespace Euphonia.BusinessLogicLayer.Interfaces
+namespace Resonance.BusinessLogicLayer.Interfaces
 {
     /// <summary>
     /// Service interface voor authenticatie
@@ -12,3 +12,4 @@ namespace Euphonia.BusinessLogicLayer.Interfaces
         Task<UserDto?> GetUserByIdAsync(int id);
     }
 }
+

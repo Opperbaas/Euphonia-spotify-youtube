@@ -1,8 +1,8 @@
-using Euphonia.BusinessLogicLayer.DTOs;
+﻿using Resonance.BusinessLogicLayer.DTOs;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Euphonia.BusinessLogicLayer.Interfaces
+namespace Resonance.BusinessLogicLayer.Interfaces
 {
     /// <summary>
     /// Interface voor Notificatie service
@@ -65,3 +65,4 @@ namespace Euphonia.BusinessLogicLayer.Interfaces
         Task StuurMuziekGekoppeldNotificatieAsync(int userId, string muziekTitel);
     }
 }
+

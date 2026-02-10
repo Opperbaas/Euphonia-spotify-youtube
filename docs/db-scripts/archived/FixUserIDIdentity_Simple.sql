@@ -1,7 +1,7 @@
--- Eenvoudiger script om 'user' kolom IDENTITY te maken
+﻿-- Eenvoudiger script om 'user' kolom IDENTITY te maken
 -- Gebruik dit als het andere script niet werkte
 
-USE EuphoniaDB;
+USE ResonanceDB;
 
 -- Verwijder oude backup als die bestaat
 IF OBJECT_ID('table1_user_backup', 'U') IS NOT NULL
@@ -62,3 +62,4 @@ SELECT
     COLUMNPROPERTY(OBJECT_ID('dbo.table1_user'), COLUMN_NAME, 'IsIdentity') as IS_IDENTITY
 FROM INFORMATION_SCHEMA.COLUMNS 
 WHERE TABLE_NAME = 'table1_user';
+

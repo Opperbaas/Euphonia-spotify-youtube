@@ -1,5 +1,5 @@
--- Fix PK column in stemmingMuziek table to have IDENTITY
-USE EuphoniaDB;
+﻿-- Fix PK column in stemmingMuziek table to have IDENTITY
+USE ResonanceDB;
 GO
 
 -- Controleer of de kolom al IDENTITY heeft
@@ -101,3 +101,4 @@ GO
 
 SELECT COUNT(*) AS TotalRows FROM stemmingMuziek;
 GO
+

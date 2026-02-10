@@ -1,12 +1,12 @@
-using Euphonia.BusinessLogicLayer.DTOs;
-using Euphonia.BusinessLogicLayer.Interfaces;
-using Euphonia.DataAccessLayer.Interfaces;
+﻿using Resonance.BusinessLogicLayer.DTOs;
+using Resonance.BusinessLogicLayer.Interfaces;
+using Resonance.DataAccessLayer.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Euphonia.BusinessLogicLayer.Services
+namespace Resonance.BusinessLogicLayer.Services
 {
     public class DashboardService : IDashboardService
     {
@@ -405,7 +405,7 @@ namespace Euphonia.BusinessLogicLayer.Services
             return inzichten;
         }
 
-        private List<string> GenereerInzichten(DashboardDto dashboard, List<Euphonia.DataAccessLayer.Models.Stemming> stemmingen)
+        private List<string> GenereerInzichten(DashboardDto dashboard, List<Resonance.DataAccessLayer.Models.Stemming> stemmingen)
         {
             var inzichten = new List<string>();
 
@@ -500,3 +500,4 @@ namespace Euphonia.BusinessLogicLayer.Services
         }
     }
 }
+

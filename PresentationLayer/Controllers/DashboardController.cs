@@ -1,5 +1,5 @@
-using Euphonia.BusinessLogicLayer.Interfaces;
-using Euphonia.PresentationLayer.Filters;
+﻿using Resonance.BusinessLogicLayer.Interfaces;
+using Resonance.PresentationLayer.Filters;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -24,3 +24,4 @@ namespace PresentationLayer.Controllers
         }
     }
 }
+

@@ -1,15 +1,15 @@
-using Xunit;
+﻿using Xunit;
 using Moq;
-using Euphonia.BusinessLogicLayer.Services;
-using Euphonia.DataAccessLayer.Interfaces;
-using Euphonia.DataAccessLayer.Repositories;
-using Euphonia.BusinessLogicLayer.DTOs;
-using Euphonia.DataAccessLayer.Models;
+using Resonance.BusinessLogicLayer.Services;
+using Resonance.DataAccessLayer.Interfaces;
+using Resonance.DataAccessLayer.Repositories;
+using Resonance.BusinessLogicLayer.DTOs;
+using Resonance.DataAccessLayer.Models;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Euphonia.Tests.UnitTests.Services
+namespace Resonance.Tests.UnitTests.Services
 {
     public class StemmingServiceTests
     {
@@ -72,3 +72,4 @@ namespace Euphonia.Tests.UnitTests.Services
         }
     }
 }
+

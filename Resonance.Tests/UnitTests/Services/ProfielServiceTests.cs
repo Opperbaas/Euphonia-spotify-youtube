@@ -1,11 +1,11 @@
-using Xunit;
+﻿using Xunit;
 using Moq;
-using Euphonia.BusinessLogicLayer.Services;
-using Euphonia.DataAccessLayer.Interfaces;
-using Euphonia.DataAccessLayer.Models;
-using Euphonia.BusinessLogicLayer.DTOs;
+using Resonance.BusinessLogicLayer.Services;
+using Resonance.DataAccessLayer.Interfaces;
+using Resonance.DataAccessLayer.Models;
+using Resonance.BusinessLogicLayer.DTOs;
 
-namespace Euphonia.Tests.UnitTests.Services
+namespace Resonance.Tests.UnitTests.Services
 {
     public class ProfielServiceTests
     {
@@ -228,3 +228,4 @@ namespace Euphonia.Tests.UnitTests.Services
         }
     }
 }
+

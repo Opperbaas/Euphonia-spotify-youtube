@@ -1,8 +1,8 @@
-using System;
+﻿using System;
 using System.Threading.Tasks;
-using Euphonia.DataAccessLayer.Repositories;
+using Resonance.DataAccessLayer.Repositories;
 
-namespace Euphonia.DataAccessLayer.Interfaces
+namespace Resonance.DataAccessLayer.Interfaces
 {
     /// <summary>
     /// Unit of Work pattern voor transactiebeheer
@@ -25,3 +25,4 @@ namespace Euphonia.DataAccessLayer.Interfaces
         Task RollbackAsync();
     }
 }
+

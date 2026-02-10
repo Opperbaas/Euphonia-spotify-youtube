@@ -1,11 +1,11 @@
-# Euphonia Test Project
+﻿# Resonance Test Project
 
-Dit project bevat unit tests en integration tests voor de Euphonia applicatie.
+Dit project bevat unit tests en integration tests voor de Resonance applicatie.
 
 ## Folder Structuur
 
 ```
-Euphonia.Tests/
+Resonance.Tests/
 ├── UnitTests/                  # Unit tests voor individuele componenten
 │   ├── Services/              # Tests voor business logic services
 │   ├── Repositories/          # Tests voor data access repositories
@@ -96,3 +96,4 @@ Zie `UnitTests/Services/ProfielServiceTests.cs` voor voorbeelden van:
 - Async methode tests
 - Testing van verschillende scenarios (success, not found, invalid data)
 - Verify dat dependencies correct worden aangeroepen
+

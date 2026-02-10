@@ -1,6 +1,6 @@
-using Euphonia.DataAccessLayer.Models;
+﻿using Resonance.DataAccessLayer.Models;
 
-namespace Euphonia.DataAccessLayer.Interfaces
+namespace Resonance.DataAccessLayer.Interfaces
 {
     /// <summary>
     /// Repository interface voor User
@@ -11,3 +11,4 @@ namespace Euphonia.DataAccessLayer.Interfaces
         Task<bool> EmailExistsAsync(string email);
     }
 }
+

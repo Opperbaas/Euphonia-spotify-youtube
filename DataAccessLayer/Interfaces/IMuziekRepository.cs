@@ -1,8 +1,8 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Euphonia.DataAccessLayer.Models;
+using Resonance.DataAccessLayer.Models;
 
-namespace Euphonia.DataAccessLayer.Interfaces
+namespace Resonance.DataAccessLayer.Interfaces
 {
     /// <summary>
     /// Repository interface voor Muziek entiteit
@@ -16,3 +16,4 @@ namespace Euphonia.DataAccessLayer.Interfaces
         Task<IEnumerable<Muziek>> SearchAsync(string searchTerm);
     }
 }
+

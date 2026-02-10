@@ -1,10 +1,10 @@
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Euphonia.BusinessLogicLayer.Interfaces;
-using Euphonia.BusinessLogicLayer.DTOs;
-using Euphonia.PresentationLayer.Filters;
+using Resonance.BusinessLogicLayer.Interfaces;
+using Resonance.BusinessLogicLayer.DTOs;
+using Resonance.PresentationLayer.Filters;
 
-namespace Euphonia.PresentationLayer.Controllers
+namespace Resonance.PresentationLayer.Controllers
 {
     /// <summary>
     /// MVC Controller voor Muziek beheer (met Views)
@@ -115,3 +115,4 @@ namespace Euphonia.PresentationLayer.Controllers
         }
     }
 }
+

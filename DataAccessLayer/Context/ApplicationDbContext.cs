@@ -1,7 +1,7 @@
-using Microsoft.EntityFrameworkCore;
-using Euphonia.DataAccessLayer.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using Resonance.DataAccessLayer.Models;
 
-namespace Euphonia.DataAccessLayer.Context
+namespace Resonance.DataAccessLayer.Context
 {
     /// <summary>
     /// Database context - Entity Framework Core
@@ -128,3 +128,4 @@ namespace Euphonia.DataAccessLayer.Context
         }
     }
 }
+

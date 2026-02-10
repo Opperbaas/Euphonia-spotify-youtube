@@ -1,6 +1,6 @@
-using Euphonia.BusinessLogicLayer.DTOs;
+﻿using Resonance.BusinessLogicLayer.DTOs;
 
-namespace Euphonia.BusinessLogicLayer.Interfaces
+namespace Resonance.BusinessLogicLayer.Interfaces
 {
     /// <summary>
     /// Service interface voor Profiel business logic
@@ -18,3 +18,4 @@ namespace Euphonia.BusinessLogicLayer.Interfaces
         Task<bool> DeleteAsync(int id);
     }
 }
+

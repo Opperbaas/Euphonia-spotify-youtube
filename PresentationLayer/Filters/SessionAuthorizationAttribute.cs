@@ -1,7 +1,7 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace Euphonia.PresentationLayer.Filters
+namespace Resonance.PresentationLayer.Filters
 {
     /// <summary>
     /// Custom authorization filter voor sessie-gebaseerde authenticatie
@@ -20,3 +20,4 @@ namespace Euphonia.PresentationLayer.Filters
         }
     }
 }
+

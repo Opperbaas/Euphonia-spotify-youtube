@@ -1,7 +1,7 @@
-@{
+﻿@{
     ViewData["Title"] = "Muziek Koppelen";
-    var stemming = ViewBag.Stemming as Euphonia.BusinessLogicLayer.DTOs.StemmingDto;
-    var alleMuziek = ViewBag.AlleMuziek as List<Euphonia.BusinessLogicLayer.DTOs.MuziekDto>;
+    var stemming = ViewBag.Stemming as Resonance.BusinessLogicLayer.DTOs.StemmingDto;
+    var alleMuziek = ViewBag.AlleMuziek as List<Resonance.BusinessLogicLayer.DTOs.MuziekDto>;
     var gekoppeldeMuziekIDs = ViewBag.GekoppeldeMuziekIDs as List<int> ?? new List<int>();
 }
 
@@ -136,3 +136,4 @@
         </div>
     </div>
 </div>
+

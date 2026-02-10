@@ -1,6 +1,6 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace Euphonia.BusinessLogicLayer.DTOs
+namespace Resonance.BusinessLogicLayer.DTOs
 {
     /// <summary>
     /// DTO voor het ophalen van Muziek data
@@ -55,3 +55,4 @@ namespace Euphonia.BusinessLogicLayer.DTOs
         public string? Tempo { get; set; }
     }
 }
+

@@ -1,12 +1,12 @@
-using Euphonia.BusinessLogicLayer.DTOs;
-using Euphonia.DataAccessLayer.Models;
-using Euphonia.DataAccessLayer.Interfaces;
+﻿using Resonance.BusinessLogicLayer.DTOs;
+using Resonance.DataAccessLayer.Models;
+using Resonance.DataAccessLayer.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Euphonia.BusinessLogicLayer.Services
+namespace Resonance.BusinessLogicLayer.Services
 {
     public class StemmingService : IStemmingService
     {
@@ -256,3 +256,4 @@ namespace Euphonia.BusinessLogicLayer.Services
         }
     }
 }
+
